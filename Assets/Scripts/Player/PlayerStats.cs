@@ -47,6 +47,21 @@ public class PlayerStats : MonoBehaviour
         RegenerateMana(); 
     }
 
+    public void TakeDamage(float amount)
+    {
+        float damage = Mathf.Max(amount - Defense, 0f);
+        CurrentHealth = Mathf.Max(CurrentHealth - damage, 0f);
+
+        if (CurrentHealth <= 0f)
+            Die();
+    }
+
+    private void Die()
+    {
+        //TODO
+        Debug.Log("Player died");
+    }
+
     public void UpgradeStat(StatType stat)
     {
         switch (stat)
