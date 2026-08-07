@@ -93,19 +93,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""b689e6fd-b989-4540-a8ff-a969bd48bffc"",
             ""actions"": [
                 {
-                    ""name"": ""MoveClick"",
-                    ""type"": ""Button"",
-                    ""id"": ""c5a9410e-4027-44ff-9b39-0877511c5b4b"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
-                },
-                {
-                    ""name"": ""PointerPosition"",
+                    ""name"": ""Move"",
                     ""type"": ""Value"",
-                    ""id"": ""199cea01-f75e-4577-8e81-37621443d545"",
+                    ""id"": ""e6db9149-4c07-4272-8bc6-9b83b3ea1a8c"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -115,26 +105,59 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""8f9c8b49-94b9-4347-ba4d-7a95a1233c40"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""689ec30d-aa2f-427d-954f-70308a4abe9f"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveClick"",
-                    ""isComposite"": false,
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""83f17e17-cbc5-4bdb-a859-15ee3415c614"",
-                    ""path"": ""<Pointer>/position"",
+                    ""name"": ""up"",
+                    ""id"": ""3e7f1b42-844e-460e-87b2-69e76d9f1f2e"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PointerPosition"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4d938852-aaba-4fa1-8bfc-a6d43d8fc3a9"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d48b8c02-04e0-4376-83e0-a16b345bdfc4"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""18c9d3bb-2f87-43de-a10e-737dd1031c23"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -204,8 +227,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_MoveClick = m_Player.FindAction("MoveClick", throwIfNotFound: true);
-        m_Player_PointerPosition = m_Player.FindAction("PointerPosition", throwIfNotFound: true);
+        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -286,8 +308,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_MoveClick;
-    private readonly InputAction m_Player_PointerPosition;
+    private readonly InputAction m_Player_Move;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -300,13 +321,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Player/MoveClick".
+        /// Provides access to the underlying input action "Player/Move".
         /// </summary>
-        public InputAction @MoveClick => m_Wrapper.m_Player_MoveClick;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/PointerPosition".
-        /// </summary>
-        public InputAction @PointerPosition => m_Wrapper.m_Player_PointerPosition;
+        public InputAction @Move => m_Wrapper.m_Player_Move;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -333,12 +350,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @MoveClick.started += instance.OnMoveClick;
-            @MoveClick.performed += instance.OnMoveClick;
-            @MoveClick.canceled += instance.OnMoveClick;
-            @PointerPosition.started += instance.OnPointerPosition;
-            @PointerPosition.performed += instance.OnPointerPosition;
-            @PointerPosition.canceled += instance.OnPointerPosition;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
         }
 
         /// <summary>
@@ -350,12 +364,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="PlayerActions" />
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @MoveClick.started -= instance.OnMoveClick;
-            @MoveClick.performed -= instance.OnMoveClick;
-            @MoveClick.canceled -= instance.OnMoveClick;
-            @PointerPosition.started -= instance.OnPointerPosition;
-            @PointerPosition.performed -= instance.OnPointerPosition;
-            @PointerPosition.canceled -= instance.OnPointerPosition;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
         }
 
         /// <summary>
@@ -462,18 +473,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         /// <summary>
-        /// Method invoked when associated input action "MoveClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMoveClick(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "PointerPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPointerPosition(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
 }

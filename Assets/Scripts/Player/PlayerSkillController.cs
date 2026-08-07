@@ -3,14 +3,13 @@ using UnityEngine;
 
 public class PlayerSkillController : MonoBehaviour
 {
-    [SerializeField] private PlayerStats playerStats;
-    [SerializeField] private Skill[] equippedSkills = new Skill[8];
+    [SerializeField] private PlayerStats _playerStats;
+    [SerializeField] private Skill[] _equippedSkills = new Skill[8];
+    [SerializeField] private PlayerMovement _playerMovement;
     
-    [SerializeField] private float turnInterval = 1f;
+    [SerializeField] private float _turnInterval = 1f;
     private int _currentSkillIndex;
     private float _skillTimer;
-
-    private Vector2 _lastMoveDirection = Vector2.right;
 
     private void Update()
     {
@@ -24,7 +23,7 @@ public class PlayerSkillController : MonoBehaviour
 
         _skillTimer += Time.deltaTime;
 
-        if (_skillTimer < turnInterval)
+        if (_skillTimer < _turnInterval)
             return;
 
         _skillTimer = 0f;
@@ -35,17 +34,17 @@ public class PlayerSkillController : MonoBehaviour
 
     private void ActivateCurrentSkill()
     {
-        Skill skill = equippedSkills[_currentSkillIndex];
+        Skill skill = _equippedSkills[_currentSkillIndex];
 
         if (skill == null)
             return;
 
-        skill.Activate(gameObject, _lastMoveDirection);
+        skill.Activate(gameObject, _playerMovement.LastMoveDirection);
     }
     
     private void AdvanceToNextSkill()
     {
-        if (equippedSkills.Length == 0) return;
+        if (_equippedSkills.Length == 0) return;
 
         int checkedSlots = 0;
 
@@ -53,29 +52,23 @@ public class PlayerSkillController : MonoBehaviour
         {
             _currentSkillIndex++;
 
-            if (_currentSkillIndex >= equippedSkills.Length)
+            if (_currentSkillIndex >= _equippedSkills.Length)
                 _currentSkillIndex = 0;
 
             checkedSlots++;
         }
-        while (equippedSkills[_currentSkillIndex] == null
-            && checkedSlots < equippedSkills.Length);
+        while (_equippedSkills[_currentSkillIndex] == null
+            && checkedSlots < _equippedSkills.Length);
     }
 
     private bool HasAnySkill()
     {
-        foreach (Skill skill in equippedSkills)
+        foreach (Skill skill in _equippedSkills)
         {
             if (skill != null)
                 return true;
         }
 
         return false;
-    }
-
-    public void SetLastMoveDirection(Vector2 direction)
-    {
-        if (direction.sqrMagnitude > 0.001f)
-            _lastMoveDirection = direction.normalized;
     }
 }

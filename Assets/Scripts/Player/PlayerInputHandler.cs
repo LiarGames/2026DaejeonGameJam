@@ -32,21 +32,10 @@ public class PlayerInputHandler : MonoBehaviour, PlayerInput.IPlayerActions
         _input.Dispose();
     }
 
-    public void OnPointerPosition(InputAction.CallbackContext context)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        _pointerPosition = context.ReadValue<Vector2>();
-    }
+        Vector2 movementInput = context.ReadValue<Vector2>();
 
-    public void OnMoveClick(InputAction.CallbackContext context)
-    {
-        if (!context.performed)
-            return;
-
-        Vector3 worldPosition =
-            _mainCamera.ScreenToWorldPoint(_pointerPosition);
-
-        Debug.Log(worldPosition);
-
-        _movement.SetMoveTarget(worldPosition);
+        _movement.SetMovementInput(movementInput);
     }
 }
