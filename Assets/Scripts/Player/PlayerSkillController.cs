@@ -1,16 +1,24 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerStateController))]
 public class PlayerSkillController : MonoBehaviour
 {
     [SerializeField] private PlayerStats _playerStats;
     [SerializeField] private Skill[] _equippedSkills = new Skill[8];
     [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private PlayerStateController _stateController;
     [SerializeField] private LayerMask enemyLayer;
     
     [SerializeField] private float _turnInterval = 1f;
     private int _currentSkillIndex;
     private float _skillTimer;
+
+    private void Awake()
+    {
+        if (_stateController == null)
+            _stateController = GetComponent<PlayerStateController>();
+    }
 
     private void Update()
     {
@@ -19,7 +27,7 @@ public class PlayerSkillController : MonoBehaviour
 
     private void CountSkillTimer()
     {
-        if (!HasAnySkill())
+        if (!HasAnySkill() || !_stateController.CanAttack())
             return;
 
         _skillTimer += Time.deltaTime;
@@ -29,26 +37,44 @@ public class PlayerSkillController : MonoBehaviour
 
         _skillTimer = 0f;
 
-        ActivateCurrentSkill();
+        StartCurrentSkill();
         AdvanceToNextSkill();
     }
 
-    private void ActivateCurrentSkill()
+    private void StartCurrentSkill()
     {
         Skill skill = _equippedSkills[_currentSkillIndex];
 
         if (skill == null)
             return;
 
-        SkillContext context = new SkillContext
+        StartCoroutine(PerformSkill(skill));
+    }
+
+    private IEnumerator PerformSkill(Skill skill)
+    {
+        _stateController.ChangeState(PlayerState.Attacking);
+        _playerMovement.StopMovement();
+
+        yield return new WaitForSeconds(skill.ProcessDuration);
+
+        skill.Activate(CreateSkillContext());
+
+        yield return new WaitForSeconds(skill.RecoveryDuration);
+
+        if (_stateController.CurrentState == PlayerState.Attacking)
+            _stateController.ChangeState(PlayerState.Idle);
+    }
+
+    private SkillContext CreateSkillContext()
+    {
+        return new SkillContext
         {
             Caster = gameObject,
             Stats = _playerStats,
             Direction = _playerMovement.LastMoveDirection,
             EnemyLayer = enemyLayer
         };
-
-        skill.Activate(context);
     }
     
     private void AdvanceToNextSkill()
