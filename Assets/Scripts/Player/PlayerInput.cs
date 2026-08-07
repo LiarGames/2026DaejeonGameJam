@@ -93,132 +93,71 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""b689e6fd-b989-4540-a8ff-a969bd48bffc"",
             ""actions"": [
                 {
-                    ""name"": ""MoveClick"",
-                    ""type"": ""Button"",
-                    ""id"": ""c5a9410e-4027-44ff-9b39-0877511c5b4b"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
-                },
-                {
-                    ""name"": ""PointerPosition"",
+                    ""name"": ""Move"",
                     ""type"": ""Value"",
-                    ""id"": ""199cea01-f75e-4577-8e81-37621443d545"",
+                    ""id"": ""e6db9149-4c07-4272-8bc6-9b83b3ea1a8c"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true,
                     ""priority"": 0
-                },
-                {
-                    ""name"": ""Skill1"",
-                    ""type"": ""Button"",
-                    ""id"": ""d6486ffe-2f95-4318-bab6-7b127d13515c"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
-                },
-                {
-                    ""name"": ""Skill2"",
-                    ""type"": ""Button"",
-                    ""id"": ""495e32e6-54dd-45b2-b8eb-cb66197471db"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
-                },
-                {
-                    ""name"": ""Skill3"",
-                    ""type"": ""Button"",
-                    ""id"": ""26ec67cd-63db-431d-9234-c5f49d69c6a6"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
-                },
-                {
-                    ""name"": ""Skill4"",
-                    ""type"": ""Button"",
-                    ""id"": ""98a25552-6a00-4946-afd2-00c458648d75"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""8f9c8b49-94b9-4347-ba4d-7a95a1233c40"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""689ec30d-aa2f-427d-954f-70308a4abe9f"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveClick"",
-                    ""isComposite"": false,
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""83f17e17-cbc5-4bdb-a859-15ee3415c614"",
-                    ""path"": ""<Pointer>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PointerPosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""655d8e74-177c-433d-9fec-0a848c6e9e62"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e2e94b2d-73e9-47ed-8165-24271a76fc75"",
+                    ""name"": ""up"",
+                    ""id"": ""3e7f1b42-844e-460e-87b2-69e76d9f1f2e"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill2"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""c91733f7-5d4a-444a-a3c0-1928200a186d"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""name"": ""down"",
+                    ""id"": ""4d938852-aaba-4fa1-8bfc-a6d43d8fc3a9"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill3"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""cd73a462-f732-4760-8734-7f13171a74af"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""name"": ""left"",
+                    ""id"": ""d48b8c02-04e0-4376-83e0-a16b345bdfc4"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill4"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""18c9d3bb-2f87-43de-a10e-737dd1031c23"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -288,12 +227,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_MoveClick = m_Player.FindAction("MoveClick", throwIfNotFound: true);
-        m_Player_PointerPosition = m_Player.FindAction("PointerPosition", throwIfNotFound: true);
-        m_Player_Skill1 = m_Player.FindAction("Skill1", throwIfNotFound: true);
-        m_Player_Skill2 = m_Player.FindAction("Skill2", throwIfNotFound: true);
-        m_Player_Skill3 = m_Player.FindAction("Skill3", throwIfNotFound: true);
-        m_Player_Skill4 = m_Player.FindAction("Skill4", throwIfNotFound: true);
+        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -374,12 +308,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_MoveClick;
-    private readonly InputAction m_Player_PointerPosition;
-    private readonly InputAction m_Player_Skill1;
-    private readonly InputAction m_Player_Skill2;
-    private readonly InputAction m_Player_Skill3;
-    private readonly InputAction m_Player_Skill4;
+    private readonly InputAction m_Player_Move;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -392,29 +321,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Player/MoveClick".
+        /// Provides access to the underlying input action "Player/Move".
         /// </summary>
-        public InputAction @MoveClick => m_Wrapper.m_Player_MoveClick;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/PointerPosition".
-        /// </summary>
-        public InputAction @PointerPosition => m_Wrapper.m_Player_PointerPosition;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Skill1".
-        /// </summary>
-        public InputAction @Skill1 => m_Wrapper.m_Player_Skill1;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Skill2".
-        /// </summary>
-        public InputAction @Skill2 => m_Wrapper.m_Player_Skill2;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Skill3".
-        /// </summary>
-        public InputAction @Skill3 => m_Wrapper.m_Player_Skill3;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Skill4".
-        /// </summary>
-        public InputAction @Skill4 => m_Wrapper.m_Player_Skill4;
+        public InputAction @Move => m_Wrapper.m_Player_Move;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -441,24 +350,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @MoveClick.started += instance.OnMoveClick;
-            @MoveClick.performed += instance.OnMoveClick;
-            @MoveClick.canceled += instance.OnMoveClick;
-            @PointerPosition.started += instance.OnPointerPosition;
-            @PointerPosition.performed += instance.OnPointerPosition;
-            @PointerPosition.canceled += instance.OnPointerPosition;
-            @Skill1.started += instance.OnSkill1;
-            @Skill1.performed += instance.OnSkill1;
-            @Skill1.canceled += instance.OnSkill1;
-            @Skill2.started += instance.OnSkill2;
-            @Skill2.performed += instance.OnSkill2;
-            @Skill2.canceled += instance.OnSkill2;
-            @Skill3.started += instance.OnSkill3;
-            @Skill3.performed += instance.OnSkill3;
-            @Skill3.canceled += instance.OnSkill3;
-            @Skill4.started += instance.OnSkill4;
-            @Skill4.performed += instance.OnSkill4;
-            @Skill4.canceled += instance.OnSkill4;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
         }
 
         /// <summary>
@@ -470,24 +364,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="PlayerActions" />
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @MoveClick.started -= instance.OnMoveClick;
-            @MoveClick.performed -= instance.OnMoveClick;
-            @MoveClick.canceled -= instance.OnMoveClick;
-            @PointerPosition.started -= instance.OnPointerPosition;
-            @PointerPosition.performed -= instance.OnPointerPosition;
-            @PointerPosition.canceled -= instance.OnPointerPosition;
-            @Skill1.started -= instance.OnSkill1;
-            @Skill1.performed -= instance.OnSkill1;
-            @Skill1.canceled -= instance.OnSkill1;
-            @Skill2.started -= instance.OnSkill2;
-            @Skill2.performed -= instance.OnSkill2;
-            @Skill2.canceled -= instance.OnSkill2;
-            @Skill3.started -= instance.OnSkill3;
-            @Skill3.performed -= instance.OnSkill3;
-            @Skill3.canceled -= instance.OnSkill3;
-            @Skill4.started -= instance.OnSkill4;
-            @Skill4.performed -= instance.OnSkill4;
-            @Skill4.canceled -= instance.OnSkill4;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
         }
 
         /// <summary>
@@ -594,46 +473,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         /// <summary>
-        /// Method invoked when associated input action "MoveClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMoveClick(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "PointerPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPointerPosition(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Skill1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSkill1(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Skill2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSkill2(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Skill3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSkill3(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Skill4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSkill4(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
 }
