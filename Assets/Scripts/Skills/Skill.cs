@@ -2,9 +2,12 @@ using UnityEngine;
 
 public abstract class Skill : ScriptableObject
 {
-    [SerializeField] protected float cooldown = 1f;
+    [SerializeField] protected float damageMultiplier = 1f;
+    [SerializeField] private float processDuration;
+    [SerializeField] private float recoveryDuration;
 
-    public float Cooldown { get; private set; }
+    public float ProcessDuration => processDuration;
+    public float RecoveryDuration => recoveryDuration;
 
-    public abstract void Activate(GameObject player, Vector2 direction);
+    public abstract void Activate(SkillContext context);
 }

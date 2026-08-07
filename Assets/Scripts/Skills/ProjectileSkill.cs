@@ -6,9 +6,9 @@ public class ProjectileSkill : Skill
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 10f;
     
-    public override void Activate(GameObject player, Vector2 direction)
+    public override void Activate(SkillContext context)
     {
-        Vector2 playerPosition = player.transform.position;
+        Vector2 playerPosition = context.Caster.transform.position;
 
 
         GameObject projectile = Instantiate(
@@ -19,6 +19,6 @@ public class ProjectileSkill : Skill
 
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
 
-        rb.linearVelocity = direction * projectileSpeed;
+        rb.linearVelocity = context.Direction * projectileSpeed;
     }
 }
