@@ -49,13 +49,10 @@ public class TaperedMeleeSkill : Skill
     {
         float damage = context.Stats.Attack * damageMultiplier;
 
-        target.SendMessage(
-            "TakeDamage",
-            damage,
-            SendMessageOptions.DontRequireReceiver
-        );
-
         Debug.Log($"Hit {target.name} for {damage} damage!");
+
+        // Eventually:
+        // target.GetComponent<EnemyHealth>()?.TakeDamage(damage);
     }
 
     private void DrawDebugShape(

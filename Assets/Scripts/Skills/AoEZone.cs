@@ -50,15 +50,12 @@ public class AoEZone : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            hit.SendMessage(
-                "TakeDamage",
-                _damagePerTick,
-                SendMessageOptions.DontRequireReceiver
-            );
-
             Debug.Log(
                 $"AoE hit {hit.name} for {_damagePerTick} damage!"
             );
+
+            // Eventually:
+            // hit.GetComponent<EnemyHealth>()?.TakeDamage(_damagePerTick);
         }
     }
 

@@ -17,8 +17,22 @@ public class ProjectileSkill : Skill
             Quaternion.identity
         );
 
+        Projectile projectileComponent =
+            projectile.GetComponent<Projectile>();
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
 
-        rb.linearVelocity = context.Direction * projectileSpeed;
+        if (projectileComponent == null || rb == null)
+        {
+            Debug.LogError(
+                "Projectile prefab requires Projectile and Rigidbody2D components."
+            );
+            Destroy(projectile);
+            return;
+        }
+
+        float damage = context.Stats.Attack * damageMultiplier;
+
+        projectileComponent.Initialize(damage, context.EnemyLayer);
+        rb.linearVelocity = context.Direction.normalized * projectileSpeed;
     }
 }
