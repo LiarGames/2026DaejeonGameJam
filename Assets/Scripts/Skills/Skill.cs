@@ -6,5 +6,5 @@ public abstract class Skill : ScriptableObject
 
     public float Cooldown { get; private set; }
 
-    public abstract void Activate(GameObject player, Vector2 targetPosition);
+    public abstract void Activate(GameObject player, Vector2 direction);
 }

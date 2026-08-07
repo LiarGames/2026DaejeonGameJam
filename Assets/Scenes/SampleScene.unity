@@ -667,11 +667,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ec70d58285db24a980537184a29ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillController
-  equippedSkills:
+  _playerStats: {fileID: 1335333318}
+  _equippedSkills:
   - {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _playerMovement: {fileID: 1335333315}
+  _turnInterval: 1
 --- !u!114 &1335333315
 MonoBehaviour:
   m_ObjectHideFlags: 0

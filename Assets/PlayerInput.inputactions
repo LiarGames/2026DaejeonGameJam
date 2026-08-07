@@ -7,19 +7,9 @@
             "id": "b689e6fd-b989-4540-a8ff-a969bd48bffc",
             "actions": [
                 {
-                    "name": "MoveClick",
-                    "type": "Button",
-                    "id": "c5a9410e-4027-44ff-9b39-0877511c5b4b",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
-                    "name": "PointerPosition",
+                    "name": "Move",
                     "type": "Value",
-                    "id": "199cea01-f75e-4577-8e81-37621443d545",
+                    "id": "e6db9149-4c07-4272-8bc6-9b83b3ea1a8c",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -29,26 +19,59 @@
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "8f9c8b49-94b9-4347-ba4d-7a95a1233c40",
-                    "path": "<Mouse>/leftButton",
+                    "name": "2D Vector",
+                    "id": "689ec30d-aa2f-427d-954f-70308a4abe9f",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveClick",
-                    "isComposite": false,
+                    "action": "Move",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "83f17e17-cbc5-4bdb-a859-15ee3415c614",
-                    "path": "<Pointer>/position",
+                    "name": "up",
+                    "id": "3e7f1b42-844e-460e-87b2-69e76d9f1f2e",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PointerPosition",
+                    "action": "Move",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "4d938852-aaba-4fa1-8bfc-a6d43d8fc3a9",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "d48b8c02-04e0-4376-83e0-a16b345bdfc4",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "18c9d3bb-2f87-43de-a10e-737dd1031c23",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
