@@ -5,30 +5,28 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerStats _playerStats;
     [SerializeField] private Rigidbody2D _rb;
 
-    private Vector2 _targetPosition;
-    private bool _hasTarget;
+    private Vector2 _movementInput;
 
-    public void SetMoveTarget(Vector2 position)
-    {
-        _targetPosition = position;
-        _hasTarget = true;
-    }
+    public Vector2 LastMoveDirection { get; private set; } = Vector2.down;
 
     private void FixedUpdate()
     {
-        if (!_hasTarget)
-            return;
+        Move();
+    }
 
-        Vector2 currentPosition = _rb.position;
-        Vector2 difference = _targetPosition - currentPosition;
+    private void Move()
+    {
+        _rb.linearVelocity =
+            _movementInput.normalized * _playerStats.MoveSpeed;
+    }
 
-        if (difference.sqrMagnitude < 0.01f)
+    public void SetMovementInput(Vector2 input)
+    {
+        _movementInput = input;
+
+        if (_movementInput.sqrMagnitude > 0.001f)
         {
-            _hasTarget = false;
-            _rb.linearVelocity = Vector2.zero;
-            return;
+            LastMoveDirection = _movementInput.normalized;
         }
-
-        _rb.linearVelocity = difference.normalized * _playerStats.MoveSpeed;
     }
 }
