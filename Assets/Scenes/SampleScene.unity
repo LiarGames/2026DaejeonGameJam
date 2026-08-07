@@ -642,6 +642,7 @@ GameObject:
   - component: {fileID: 1335333318}
   - component: {fileID: 1335333315}
   - component: {fileID: 1335333314}
+  - component: {fileID: 1335333319}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -739,13 +740,14 @@ MonoBehaviour:
   _equippedSkills:
   - {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
   - {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 04188722fc851fd4e9702baa13b2ad21, type: 2}
+  - {fileID: 11400000, guid: 1b9125564cfb15e4e81af93d2afaf71d, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   _playerMovement: {fileID: 1335333315}
+  _stateController: {fileID: 1335333319}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -764,6 +766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _playerStats: {fileID: 1335333318}
   _rb: {fileID: 1335333317}
+  _stateController: {fileID: 1335333319}
 --- !u!114 &1335333316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,6 +822,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   data: {fileID: 11400000, guid: 0590ec889732c584f999af583e4c26da, type: 2}
+--- !u!114 &1335333319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335333311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734b4e5e289c4ac6aef9f38d3fc98249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStateController
 --- !u!1 &1394497140 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7347026216957143015, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
