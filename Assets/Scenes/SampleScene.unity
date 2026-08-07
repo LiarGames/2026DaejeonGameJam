@@ -571,6 +571,7 @@ GameObject:
   - component: {fileID: 1335333312}
   - component: {fileID: 1335333317}
   - component: {fileID: 1335333316}
+  - component: {fileID: 1335333318}
   - component: {fileID: 1335333315}
   - component: {fileID: 1335333314}
   m_Layer: 6
@@ -683,8 +684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1c872ae40b0794294796c2666a5a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  moveSpeed: 5
-  rb: {fileID: 1335333317}
+  _playerStats: {fileID: 1335333318}
+  _rb: {fileID: 1335333317}
 --- !u!114 &1335333316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -727,6 +728,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1335333318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335333311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4a943dc81979141b256c2fd04cfc94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  data: {fileID: 11400000, guid: 0590ec889732c584f999af583e4c26da, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

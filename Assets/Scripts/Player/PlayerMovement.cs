@@ -2,33 +2,33 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private PlayerStats _playerStats;
+    [SerializeField] private Rigidbody2D _rb;
 
-    private Vector2 targetPosition;
-    private bool hasTarget;
+    private Vector2 _targetPosition;
+    private bool _hasTarget;
 
     public void SetMoveTarget(Vector2 position)
     {
-        targetPosition = position;
-        hasTarget = true;
+        _targetPosition = position;
+        _hasTarget = true;
     }
 
     private void FixedUpdate()
     {
-        if (!hasTarget)
+        if (!_hasTarget)
             return;
 
-        Vector2 currentPosition = rb.position;
-        Vector2 difference = targetPosition - currentPosition;
+        Vector2 currentPosition = _rb.position;
+        Vector2 difference = _targetPosition - currentPosition;
 
         if (difference.sqrMagnitude < 0.01f)
         {
-            hasTarget = false;
-            rb.linearVelocity = Vector2.zero;
+            _hasTarget = false;
+            _rb.linearVelocity = Vector2.zero;
             return;
         }
 
-        rb.linearVelocity = difference.normalized * moveSpeed;
+        _rb.linearVelocity = difference.normalized * _playerStats.MoveSpeed;
     }
 }
