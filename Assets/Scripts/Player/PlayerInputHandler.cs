@@ -49,36 +49,4 @@ public class PlayerInputHandler : MonoBehaviour, PlayerInput.IPlayerActions
 
         _movement.SetMoveTarget(worldPosition);
     }
-
-    public void OnSkill1(InputAction.CallbackContext context)
-    {
-        if (!context.performed) return;
-
-        Vector2 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(_pointerPosition);
-        _skills.UseSkill(0, mouseWorldPosition);
-    }
-
-    public void OnSkill2(InputAction.CallbackContext context)
-    {
-        if (!context.performed) return;
-
-        Vector2 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(_pointerPosition);
-        _skills.UseSkill(1, mouseWorldPosition);
-    }
-
-    public void OnSkill3(InputAction.CallbackContext context)
-    {
-        if (!context.performed) return;
-
-        Vector2 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(_pointerPosition);
-        _skills.UseSkill(2, mouseWorldPosition);
-    }
-
-    public void OnSkill4(InputAction.CallbackContext context)
-    {
-        if (!context.performed) return;
-
-        Vector2 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(_pointerPosition);
-        _skills.UseSkill(3, mouseWorldPosition);
-    }
 }
