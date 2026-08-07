@@ -47,7 +47,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerInput.IPlayerActions
 
         Debug.Log(worldPosition);
 
-        // movement.SetMoveTarget(worldPosition);
+        _movement.SetMoveTarget(worldPosition);
     }
 
     public void OnSkill1(InputAction.CallbackContext context)
