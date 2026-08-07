@@ -6,6 +6,7 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] private PlayerStats _playerStats;
     [SerializeField] private Skill[] _equippedSkills = new Skill[8];
     [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private LayerMask enemyLayer;
     
     [SerializeField] private float _turnInterval = 1f;
     private int _currentSkillIndex;
@@ -39,7 +40,15 @@ public class PlayerSkillController : MonoBehaviour
         if (skill == null)
             return;
 
-        skill.Activate(gameObject, _playerMovement.LastMoveDirection);
+        SkillContext context = new SkillContext
+        {
+            Caster = gameObject,
+            Stats = _playerStats,
+            Direction = _playerMovement.LastMoveDirection,
+            EnemyLayer = enemyLayer
+        };
+
+        skill.Activate(context);
     }
     
     private void AdvanceToNextSkill()
