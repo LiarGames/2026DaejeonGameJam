@@ -43,11 +43,15 @@ public class TaperedMeleeSkill : AttackSkill
                 HitTarget(context, target);
         }
 
+        float effectiveWidth =
+            2f * Mathf.Tan(tipAngle * 0.5f * Mathf.Deg2Rad) *
+            effectiveLength;
+
         SpawnVFX(
             origin,
             forward,
             null,
-            Vector3.one * effectiveLength
+            new Vector3(effectiveLength, effectiveWidth, 1f)
         );
 
         DrawDebugShape(origin, forward, context);

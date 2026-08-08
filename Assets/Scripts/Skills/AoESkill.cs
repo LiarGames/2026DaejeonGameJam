@@ -33,12 +33,23 @@ public class AoESkill : AttackSkill
             Quaternion.identity
         );
 
-        float effectiveLength = radius * context.Modifiers.RangeMultiplier;
+        float effectiveRadius = radius * context.Modifiers.RangeMultiplier;
 
         AoEZone zone = zoneObject.GetComponent<AoEZone>();
 
+        if (zone == null)
+        {
+            Debug.LogError(
+                $"AoE prefab '{zonePrefab.name}' requires an AoEZone component " +
+                "on its root GameObject.",
+                zoneObject
+            );
+            Destroy(zoneObject);
+            return;
+        }
+
         zone.Initialize(
-            effectiveLength,
+            effectiveRadius,
             duration,
             tickInterval,
             damagePerTick,
@@ -50,7 +61,7 @@ public class AoESkill : AttackSkill
             spawnPosition,
             context.Direction,
             zone.transform,
-            Vector3.one * effectiveLength
+            Vector3.one * (effectiveRadius * 2f)
         );
 
         DrawDebugShape(

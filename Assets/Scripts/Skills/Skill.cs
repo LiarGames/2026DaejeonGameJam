@@ -20,7 +20,7 @@ public abstract class Skill : ScriptableObject
         Vector2 position,
         Vector2 direction,
         Transform parent = null,
-        Vector3? localScale = null)
+        Vector3? scaleMultiplier = null)
     {
         if (vfxPrefab == null)
             return null;
@@ -35,8 +35,13 @@ public abstract class Skill : ScriptableObject
         if (parent != null)
             vfx.transform.SetParent(parent, true);
 
-        if (localScale.HasValue)
-            vfx.transform.localScale = localScale.Value;
+        if (scaleMultiplier.HasValue)
+        {
+            vfx.transform.localScale = Vector3.Scale(
+                vfx.transform.localScale,
+                scaleMultiplier.Value
+            );
+        }
 
         if (vfxLifetime > 0f)
             Destroy(vfx, vfxLifetime);
