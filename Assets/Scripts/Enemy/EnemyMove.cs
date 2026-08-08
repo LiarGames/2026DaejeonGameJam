@@ -62,6 +62,10 @@ public class EnemyMovement : MonoBehaviour
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         if (rb != null)
             rb.linearVelocity = direction * projectileSpeed;
+
+        Projectile projectileDamage = projectile.GetComponent<Projectile>();
+        if (projectileDamage != null)
+            projectileDamage.Initialize(stats.Attack, ProjectileTarget.Player);
     }
 
     private void MeleeAttack(Vector2 direction)

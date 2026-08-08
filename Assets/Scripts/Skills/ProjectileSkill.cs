@@ -10,7 +10,6 @@ public class ProjectileSkill : Skill
     {
         Vector2 playerPosition = context.Caster.transform.position;
 
-
         GameObject projectile = Instantiate(
             projectilePrefab,
             playerPosition,
@@ -19,6 +18,15 @@ public class ProjectileSkill : Skill
 
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
 
-        rb.linearVelocity = context.Direction * projectileSpeed;
+        PlayerStats playerStats = context.Caster.GetComponent<PlayerStats>();
+        Projectile projectileDamage = projectile.GetComponent<Projectile>();
+        if (playerStats != null && projectileDamage != null)
+        {
+            float damage = playerStats.Attack * damageMultiplier;
+            projectileDamage.Initialize(damage, ProjectileTarget.Enemy);
+        }
+
+        if (rb != null)
+            rb.linearVelocity = context.Direction * projectileSpeed;
     }
 }

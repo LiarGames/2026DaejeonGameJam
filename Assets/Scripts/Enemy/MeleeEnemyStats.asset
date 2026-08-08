@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MeleeEnemyStats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatsData
   startingMaxHealth: 100
-  startingAttack: 10
+  startingAttack: 30
   startingDefense: 0
   startingMoveSpeed: 3
   startingAttackRange: 1.5

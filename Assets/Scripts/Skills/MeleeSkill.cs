@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skills/Melee Skill")]
@@ -60,10 +61,16 @@ public class MeleeSkill : Skill
             context.EnemyLayer
         );
 
+        HashSet<EnemyStats> damagedTargets = new HashSet<EnemyStats>();
+
         foreach (Collider2D target in targets)
         {
+            EnemyStats enemyStats = target.GetComponentInParent<EnemyStats>();
+            if (enemyStats == null || !damagedTargets.Add(enemyStats))
+                continue;
+
             Vector2 directionToTarget =
-                ((Vector2)target.transform.position -
+                ((Vector2)enemyStats.transform.position -
                  (Vector2)context.Caster.transform.position).normalized;
 
             float targetAngle =
@@ -71,12 +78,12 @@ public class MeleeSkill : Skill
 
             if (targetAngle <= angle / 2f)
             {
-                HitTarget(context.Caster, target);
+                HitTarget(context.Caster, enemyStats);
             }
         }
     }
 
-    private void HitTarget(GameObject player, Collider2D target)
+    private void HitTarget(GameObject player, EnemyStats target)
     {
         PlayerStats playerStats =
             player.GetComponent<PlayerStats>();
@@ -84,12 +91,9 @@ public class MeleeSkill : Skill
         float damage =
             playerStats.Attack * damageMultiplier;
 
-        Debug.Log(
-            $"Hit {target.name} for {damage} damage!"
-        );
+        target.TakeDamage(damage);
 
-        // Eventually:
-        // target.GetComponent<EnemyHealth>()?.TakeDamage(damage);
+        //Debug.Log($"Hit {target.name} for {damage} damage!");
     }
 
     private void DrawDebugSector(

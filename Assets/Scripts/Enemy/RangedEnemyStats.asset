@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RangedEnemyStats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatsData
   startingMaxHealth: 60
-  startingAttack: 10
+  startingAttack: 20
   startingDefense: 0
   startingMoveSpeed: 2
   startingAttackRange: 5
