@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerStateController))]
 public class PlayerSkillController : MonoBehaviour
 {
     [SerializeField] private PlayerStats _playerStats;
-    [SerializeField] private Skill[] _equippedSkills = new Skill[8];
+    [SerializeField] private List<Skill> _equippedSkills = new List<Skill>();
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private PlayerStateController _stateController;
     [SerializeField] private LayerMask enemyLayer;
@@ -15,6 +17,9 @@ public class PlayerSkillController : MonoBehaviour
     private float _skillTimer;
     private SkillModifiers _pendingModifiers = SkillModifiers.Default;
 
+    private float _attackDuration; // 이번 시전의 총 소요(선딜+후딜)
+    private float _attackElapsed;  // 시전 경과
+
     private void Awake()
     {
         if (_stateController == null)
@@ -23,6 +28,10 @@ public class PlayerSkillController : MonoBehaviour
 
     private void Update()
     {
+        // 시전 중에는 스킬 타이머가 멈추므로, 회전 동기화를 위해 시전 경과를 따로 센다.
+        if (_stateController.CurrentState == PlayerState.Attacking)
+            _attackElapsed += Time.deltaTime;
+
         CountSkillTimer();
     }
 
@@ -47,6 +56,12 @@ public class PlayerSkillController : MonoBehaviour
 
     private Skill GetCurrentSkill()
     {
+        if (_equippedSkills.Count == 0)
+            return null;
+
+        if (_currentSkillIndex >= _equippedSkills.Count)
+            _currentSkillIndex = 0;
+
         Skill skill = _equippedSkills[_currentSkillIndex];
 
         if (skill == null)
@@ -63,6 +78,8 @@ public class PlayerSkillController : MonoBehaviour
         if (skill is SupportSkill supportSkill)
         {
             supportSkill.ApplyModifier(ref _pendingModifiers);
+            _attackDuration = 0f; // 시전 없음
+            _attackElapsed = 0f;
             AdvanceToNextSkill();
             return;
         }
@@ -81,6 +98,11 @@ public class PlayerSkillController : MonoBehaviour
             Mathf.Max(0.01f, modifiers.CastSpeedMultiplier);
         float effectiveProcessDuration =
             skill.ProcessDuration / castSpeedMultiplier;
+
+        // 회전 동기화용: 이번 시전의 총 길이를 미리 기록한다.
+        _attackDuration = effectiveProcessDuration
+            + skill.RecoveryDuration / castSpeedMultiplier;
+        _attackElapsed = 0f;
 
         _stateController.ChangeState(PlayerState.Attacking);
         _playerMovement.StopMovement();
@@ -116,7 +138,7 @@ public class PlayerSkillController : MonoBehaviour
     
     private void AdvanceToNextSkill()
     {
-        if (_equippedSkills.Length == 0) return;
+        if (_equippedSkills.Count == 0) return;
 
         int checkedSlots = 0;
 
@@ -124,13 +146,13 @@ public class PlayerSkillController : MonoBehaviour
         {
             _currentSkillIndex++;
 
-            if (_currentSkillIndex >= _equippedSkills.Length)
+            if (_currentSkillIndex >= _equippedSkills.Count)
                 _currentSkillIndex = 0;
 
             checkedSlots++;
         }
         while (_equippedSkills[_currentSkillIndex] == null
-            && checkedSlots < _equippedSkills.Length);
+            && checkedSlots < _equippedSkills.Count);
     }
 
     private bool HasAnySkill()
@@ -144,4 +166,56 @@ public class PlayerSkillController : MonoBehaviour
         return false;
     }
 
+    // --- 레벨업 카드 삽입용 외부 API ---
+
+    // 스킬 목록이 바뀌면 발생. 카루셀 UI가 구독해 다시 그린다.
+    public event Action OnSkillsChanged;
+
+    // 현재 발동 순서상 가리키는 스킬 인덱스 (하이라이트 등에 사용 가능).
+    public int CurrentSkillIndex => _currentSkillIndex;
+
+    // 한 사이클(시전 + 대기)의 진행도 0~1. 카루셀 회전 동기화에 사용한다.
+    // 시전 중에도 진행되므로 회전이 멈추지 않는다.
+    public float TurnProgress
+    {
+        get
+        {
+            float total = _attackDuration + _turnInterval;
+            if (total <= 0f)
+                return 0f;
+
+            float elapsed = _stateController.CurrentState == PlayerState.Attacking
+                ? _attackElapsed
+                : _attackDuration + _skillTimer;
+
+            return Mathf.Clamp01(elapsed / total);
+        }
+    }
+
+    public int SkillCount => _equippedSkills.Count;
+
+    public Skill GetSkill(int index)
+    {
+        if (index < 0 || index >= _equippedSkills.Count)
+            return null;
+
+        return _equippedSkills[index];
+    }
+
+    // 지정한 위치에 새 카드를 끼워넣는다. (교체가 아니라 삽입, 뒤 스킬들은 밀림)
+    // insertIndex 유효 범위: 0 ~ Count (Count면 맨 뒤).
+    public void InsertSkill(int insertIndex, Skill skill)
+    {
+        if (skill == null)
+            return;
+
+        insertIndex = Mathf.Clamp(insertIndex, 0, _equippedSkills.Count);
+        _equippedSkills.Insert(insertIndex, skill);
+
+        // 현재 재생 위치 앞에 끼워졌으면, 같은 스킬을 계속 가리키도록 인덱스 보정.
+        if (insertIndex <= _currentSkillIndex)
+            _currentSkillIndex++;
+
+        OnSkillsChanged?.Invoke();
+    }
 }

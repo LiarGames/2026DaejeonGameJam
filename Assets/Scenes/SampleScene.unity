@@ -578,6 +578,61 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
+--- !u!1 &952153208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 952153210}
+  - component: {fileID: 952153209}
+  m_Layer: 0
+  m_Name: MobSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &952153209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952153208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aa80c880dace3643977a2e45cb33936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  player: {fileID: 1335333317}
+  enemyPrefabs:
+  - {fileID: 3560255735996239358, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
+  - {fileID: 3560255735996239358, guid: b809a301d9484d19a426dcf5de1cab53, type: 3}
+  spawnRadius: 12
+  baseInterval: 2
+  minInterval: 0.3
+  intervalDecayPerMin: 1
+  healthScalePerMin: 0.15
+  speedScalePerMin: 0.1
+  damageScalePerMin: 0.15
+--- !u!4 &952153210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952153208}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 955.11096, y: 541.22516, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1229254997
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,14 +836,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillController
   _playerStats: {fileID: 1335333318}
   _equippedSkills:
-  - {fileID: 11400000, guid: 38743691d8008a647be86db337cc1e0e, type: 2}
-  - {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
-  - {fileID: 11400000, guid: 38743691d8008a647be86db337cc1e0e, type: 2}
-  - {fileID: 11400000, guid: 1b9125564cfb15e4e81af93d2afaf71d, type: 2}
-  - {fileID: 11400000, guid: 38743691d8008a647be86db337cc1e0e, type: 2}
-  - {fileID: 11400000, guid: 04188722fc851fd4e9702baa13b2ad21, type: 2}
-  - {fileID: 11400000, guid: 310a2cab4d20d4142af691f5b46efe94, type: 2}
   - {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
+  - {fileID: 11400000, guid: 1b9125564cfb15e4e81af93d2afaf71d, type: 2}
+  - {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
   _playerMovement: {fileID: 1335333315}
   _stateController: {fileID: 1335333319}
   enemyLayer:
@@ -1014,6 +1064,18 @@ PrefabInstance:
       propertyPath: stats
       value: 
       objectReference: {fileID: 1335333318}
+    - target: {fileID: 447615567137847436, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: expFill
+      value: 
+      objectReference: {fileID: 2038543696}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 1335333318}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: skillController
+      value: 
+      objectReference: {fileID: 1335333314}
     - target: {fileID: 3371245782736742559, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1122,10 +1184,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5037655025011228873, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: skillController
+      value: 
+      objectReference: {fileID: 1335333314}
+    - target: {fileID: 6575501329773544008, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: maxScale
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575501329773544008, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: minScale
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7126957706406837162, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: m_Name
       value: IngameUI
       objectReference: {fileID: 0}
+    - target: {fileID: 7870483098361446245, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: m_Name
+      value: ExpFill
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448970088427710450, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: skillController
+      value: 
+      objectReference: {fileID: 1335333314}
     - target: {fileID: 8552776433963463803, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1143,6 +1225,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+--- !u!114 &2038543696 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6910079025937057606, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+  m_PrefabInstance: {fileID: 2033741865}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &2100000000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1153,7 +1246,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3560255735996239358, guid: b809a301d9484d19a426dcf5de1cab53, type: 3}
       propertyPath: player
-      value:
+      value: 
       objectReference: {fileID: 1335333317}
     - target: {fileID: 8058048308883926217, guid: b809a301d9484d19a426dcf5de1cab53, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1186,3 +1279,4 @@ SceneRoots:
   - {fileID: 2033741865}
   - {fileID: 1627312338}
   - {fileID: 455328574}
+  - {fileID: 952153210}

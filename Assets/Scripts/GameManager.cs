@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum GameState { Playing, Paused, GameOver }
+public enum GameState { Playing, Paused, LevelUp, GameOver }
 
 
 public class GameManager : MonoBehaviour
@@ -68,10 +68,25 @@ public class GameManager : MonoBehaviour
 
     public void TogglePause()
     {
-        if (State == GameState.GameOver)
+        // 게임오버·레벨업 선택 중엔 ESC 일시정지를 막는다.
+        if (State == GameState.GameOver || State == GameState.LevelUp)
             return;
 
         SetState(State == GameState.Paused ? GameState.Playing : GameState.Paused);
+    }
+
+    // 레벨업 카드 선택 등으로 게임을 멈출 때. (일시정지 패널은 안 뜸)
+    public void EnterLevelUp()
+    {
+        if (State == GameState.Playing)
+            SetState(GameState.LevelUp);
+    }
+
+    // 카드 선택 후 게임 재개.
+    public void ResumeFromLevelUp()
+    {
+        if (State == GameState.LevelUp)
+            SetState(GameState.Playing);
     }
 
     public void GameOver()
