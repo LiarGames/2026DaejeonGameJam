@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61462e6f30f64ee1863527376913a50d, type: 3}
-  m_Name: MeleeEnemyStats
+  m_Name: EnemyStatsAngel
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatsData
   startingMaxHealth: 100
-  startingAttack: 30
-  startingDefense: 0
-  startingMoveSpeed: 3
-  startingAttackRange: 1.5
+  startingAttack: 10
+  startingDefense: 3
+  startingMoveSpeed: 10
+  startingAttackRange: 10
   startingAttackCooldown: 1
   experienceReward: 20

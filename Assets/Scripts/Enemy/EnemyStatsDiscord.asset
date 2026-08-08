@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61462e6f30f64ee1863527376913a50d, type: 3}
-  m_Name: RangedEnemyStats
+  m_Name: EnemyStatsDiscord
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatsData
-  startingMaxHealth: 60
-  startingAttack: 20
-  startingDefense: 0
+  startingMaxHealth: 30
+  startingAttack: 30
+  startingDefense: 3
   startingMoveSpeed: 10
-  startingAttackRange: 3
-  startingAttackCooldown: 1.5
+  startingAttackRange: 1.5
+  startingAttackCooldown: 1
   experienceReward: 20
