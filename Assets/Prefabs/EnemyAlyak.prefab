@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41bef9c00b6540eb93f9b1021fa33736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  data: {fileID: 11400000, guid: 729cc36e91194421988c58c8e754bee5, type: 2}
+  data: {fileID: 11400000, guid: c57e0b05d1cb18f4a9515806bffb43bb, type: 2}
   experienceGemPrefab: {fileID: 4280000000000000004, guid: 3dc9db370b4a40cabd0569f681325f29, type: 3}
 --- !u!114 &5205462469000000001
 MonoBehaviour:
@@ -212,9 +212,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   player: {fileID: 0}
   enemyself: {fileID: 6436756529074900210}
+  movementType: 0
+  preferredRange: 5
+  rangeTolerance: 0.25
   attackSkill: {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
-  closeRangeAttackSkill: {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
-  closeRangeAttackDistance: 2
   targetLayer:
     serializedVersion: 2
     m_Bits: 64

@@ -1,17 +1,27 @@
 using System.Collections;
 using UnityEngine;
 
+public enum EnemyMovementType
+{
+    Melee,
+    Ranged
+}
+
 [RequireComponent(typeof(EnemyStats), typeof(Rigidbody2D))]
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private Rigidbody2D enemyself;
 
+    [Header("Movement")]
+    [SerializeField] private EnemyMovementType movementType;
+
+    [Header("Ranged Movement")]
+    [SerializeField] private float preferredRange = 5f;
+    [SerializeField] private float rangeTolerance = 0.25f;
+
     [Header("Attack")]
     [SerializeField] private AttackSkill attackSkill;
-    [SerializeField] private AttackSkill closeRangeAttackSkill;
-    [Min(0f)]
-    [SerializeField] private float closeRangeAttackDistance = 2f;
     [SerializeField] private LayerMask targetLayer;
 
     private EnemyStats stats;
@@ -31,14 +41,20 @@ public class EnemyMovement : MonoBehaviour
         if (player != null)
             return;
 
-        PlayerStats playerStats = FindFirstObjectByType<PlayerStats>();
+        PlayerStats playerStats =
+            FindFirstObjectByType<PlayerStats>();
 
         if (playerStats != null)
-            player = playerStats.GetComponent<Rigidbody2D>();
+            player =
+                playerStats.GetComponent<Rigidbody2D>();
 
         if (player == null)
         {
-            Debug.LogError($"Player target was not found for {name}.", this);
+            Debug.LogError(
+                $"Player target was not found for {name}.",
+                this
+            );
+
             enabled = false;
         }
     }
@@ -51,44 +67,120 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        Vector2 playerPosition = player.position;
-        Vector2 currentPosition = enemyself.position;
-        Vector2 difference = playerPosition - currentPosition;
+        Vector2 difference =
+            player.position - enemyself.position;
 
-        if (difference.sqrMagnitude < stats.AttackRange * stats.AttackRange)
+        float squaredDistance =
+            difference.sqrMagnitude;
+
+        fireTimer -= Time.fixedDeltaTime;
+
+        HandleMovement(
+            difference,
+            squaredDistance
+        );
+
+        HandleAttack(
+            difference,
+            squaredDistance
+        );
+    }
+
+    private void HandleMovement(
+        Vector2 difference,
+        float squaredDistance)
+    {
+        switch (movementType)
+        {
+            case EnemyMovementType.Melee:
+                HandleMeleeMovement(
+                    difference,
+                    squaredDistance
+                );
+                break;
+
+            case EnemyMovementType.Ranged:
+                HandleRangedMovement(
+                    difference,
+                    squaredDistance
+                );
+                break;
+        }
+    }
+
+    private void HandleMeleeMovement(
+        Vector2 difference,
+        float squaredDistance)
+    {
+        float attackRangeSquared =
+            stats.AttackRange * stats.AttackRange;
+
+        if (squaredDistance <= attackRangeSquared)
         {
             StopMovement();
-
-            fireTimer -= Time.fixedDeltaTime;
-            AttackSkill selectedAttack =
-                SelectAttack(difference.sqrMagnitude);
-
-            if (fireTimer <= 0f && selectedAttack != null)
-            {
-                StartCoroutine(PerformAttack(
-                    selectedAttack,
-                    difference.normalized
-                ));
-                fireTimer = stats.AttackCooldown;
-            }
             return;
         }
 
-        enemyself.linearVelocity = difference.normalized * stats.MoveSpeed;
+        enemyself.linearVelocity =
+            difference.normalized * stats.MoveSpeed;
     }
 
-    private AttackSkill SelectAttack(float squaredDistance)
+    private void HandleRangedMovement(
+        Vector2 difference,
+        float squaredDistance)
     {
-        float closeRangeSquared =
-            closeRangeAttackDistance * closeRangeAttackDistance;
+        float minRange =
+            preferredRange - rangeTolerance;
 
-        if (closeRangeAttackSkill != null &&
-            squaredDistance <= closeRangeSquared)
+        float maxRange =
+            preferredRange + rangeTolerance;
+
+        float minRangeSquared =
+            minRange * minRange;
+
+        float maxRangeSquared =
+            maxRange * maxRange;
+
+        if (squaredDistance > maxRangeSquared)
         {
-            return closeRangeAttackSkill;
+            enemyself.linearVelocity =
+                difference.normalized * stats.MoveSpeed;
         }
+        else if (squaredDistance < minRangeSquared)
+        {
+            enemyself.linearVelocity =
+                -difference.normalized * stats.MoveSpeed;
+        }
+        else
+        {
+            StopMovement();
+        }
+    }
 
-        return attackSkill;
+    private void HandleAttack(
+        Vector2 difference,
+        float squaredDistance)
+    {
+        float attackRangeSquared =
+            stats.AttackRange * stats.AttackRange;
+
+        if (squaredDistance > attackRangeSquared)
+            return;
+
+        if (fireTimer > 0f)
+            return;
+
+        if (attackSkill == null)
+            return;
+
+        StartCoroutine(
+            PerformAttack(
+                attackSkill,
+                difference.normalized
+            )
+        );
+
+        fireTimer = stats.AttackCooldown;
     }
 
     private IEnumerator PerformAttack(
@@ -100,20 +192,25 @@ public class EnemyMovement : MonoBehaviour
 
         try
         {
-            yield return new WaitForSeconds(selectedAttack.ProcessDuration);
+            yield return new WaitForSeconds(
+                selectedAttack.ProcessDuration
+            );
 
-            SkillContext context = new SkillContext
-            {
-                Caster = gameObject,
-                AttackPower = stats.Attack,
-                Direction = direction,
-                TargetLayer = targetLayer,
-                Modifiers = SkillModifiers.Default
-            };
+            SkillContext context =
+                new SkillContext
+                {
+                    Caster = gameObject,
+                    AttackPower = stats.Attack,
+                    Direction = direction,
+                    TargetLayer = targetLayer,
+                    Modifiers = SkillModifiers.Default
+                };
 
             selectedAttack.Activate(context);
 
-            yield return new WaitForSeconds(selectedAttack.RecoveryDuration);
+            yield return new WaitForSeconds(
+                selectedAttack.RecoveryDuration
+            );
         }
         finally
         {
@@ -128,6 +225,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void StopMovement()
     {
-        enemyself.linearVelocity = Vector2.zero;
+        enemyself.linearVelocity =
+            Vector2.zero;
     }
 }
