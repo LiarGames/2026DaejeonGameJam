@@ -482,7 +482,7 @@ PrefabInstance:
       objectReference: {fileID: 1335333317}
     - target: {fileID: 7347026216957143015, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: MeleeEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 7347026216957143015, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
       propertyPath: m_Layer
@@ -531,13 +531,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7347026216957143015, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1394497145}
-    - targetCorrespondingSourceObject: {fileID: 7347026216957143015, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1394497150}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
 --- !u!1 &1229254997
 GameObject:
@@ -646,6 +640,7 @@ GameObject:
   - component: {fileID: 1335333315}
   - component: {fileID: 1335333314}
   - component: {fileID: 1335333319}
+  - component: {fileID: 1335333320}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -837,18 +832,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734b4e5e289c4ac6aef9f38d3fc98249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStateController
---- !u!1 &1394497140 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7347026216957143015, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
-  m_PrefabInstance: {fileID: 688789824}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1394497145
+--- !u!61 &1335333320
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394497140}
+  m_GameObject: {fileID: 1335333311}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -888,25 +878,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &1394497147 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 6436756529074900210, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
-  m_PrefabInstance: {fileID: 688789824}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1394497150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394497140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceab13bef8e74aed9313281caf7dff3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 100
-  _rb: {fileID: 1394497147}
 --- !u!1 &1627312335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,6 +1054,35 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+--- !u!1001 &2100000000
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3560255735996239358, guid: b809a301d9484d19a426dcf5de1cab53, type: 3}
+      propertyPath: player
+      value:
+      objectReference: {fileID: 1335333317}
+    - target: {fileID: 8058048308883926217, guid: b809a301d9484d19a426dcf5de1cab53, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058048308883926217, guid: b809a301d9484d19a426dcf5de1cab53, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058048308883926217, guid: b809a301d9484d19a426dcf5de1cab53, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b809a301d9484d19a426dcf5de1cab53, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1093,5 +1093,6 @@ SceneRoots:
   - {fileID: 1229254999}
   - {fileID: 1335333313}
   - {fileID: 688789824}
+  - {fileID: 2100000000}
   - {fileID: 2033741865}
   - {fileID: 1627312338}
