@@ -15,6 +15,6 @@ MonoBehaviour:
   startingMaxHealth: 100
   startingAttack: 10
   startingDefense: 0
-  startingMoveSpeed: 5
+  startingMoveSpeed: 3
   startingAttackRange: 1.5
   startingAttackCooldown: 1
