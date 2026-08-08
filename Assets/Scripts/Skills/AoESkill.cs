@@ -7,7 +7,7 @@ public class AoESkill : AttackSkill
     [SerializeField] private float radius = 1f;
     [SerializeField] private float duration = 3f;
     [SerializeField] private float tickInterval = 0.5f;
-    [SerializeField] private AoEZone zonePrefab;
+    [SerializeField] private GameObject zonePrefab;
 
     public float CastDistance => castDistance;
     public float Radius => radius;
@@ -27,13 +27,15 @@ public class AoESkill : AttackSkill
         float damagePerTick =
             context.AttackPower * damageMultiplier;
 
-        AoEZone zone = Instantiate(
+        GameObject zoneObject = Instantiate(
             zonePrefab,
             spawnPosition,
             Quaternion.identity
         );
 
         float effectiveLength = radius * context.Modifiers.RangeMultiplier;
+
+        AoEZone zone = zoneObject.GetComponent<AoEZone>();
 
         zone.Initialize(
             effectiveLength,

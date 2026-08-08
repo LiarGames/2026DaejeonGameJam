@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 280bd820991f139469ae20fe20cb4f0b, type: 3}
+  m_Name: PlayerHelpExpandRange
+  m_EditorClassIdentifier: Assembly-CSharp::RangeIncreaseSupport
+  vfxPrefab: {fileID: 3844118754778442563, guid: 1da9c6f7dc0413946ac2fc9cacc710a2, type: 3}
+  vfxLifetime: 0.5
+  rangeMultiplier: 2

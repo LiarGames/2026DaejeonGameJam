@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5475931715104598585}
   - component: {fileID: 2941924969575219462}
   m_Layer: 0
-  m_Name: MeleeEffect
+  m_Name: HelpKnockback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 864567885753863486, guid: 93c78ff660dac5b4799b8d56b1f70867, type: 3}
+  m_Sprite: {fileID: -3880735491715485303, guid: 0564a086374fe414c9861614830f3c04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
