@@ -6,4 +6,5 @@ public struct SkillContext
     public PlayerStats Stats;
     public Vector2 Direction;
     public LayerMask EnemyLayer;
+    public SkillModifiers Modifiers;
 }

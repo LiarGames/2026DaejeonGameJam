@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skills/Melee Skill")]
-public class MeleeSkill : Skill
+public class MeleeSkill : AttackSkill
 {
     [Header("Attack Shape")]
     [SerializeField] private float radius = 2f;
@@ -71,25 +71,21 @@ public class MeleeSkill : Skill
 
             if (targetAngle <= angle / 2f)
             {
-                HitTarget(context.Caster, target);
+                HitTarget(context, target);
             }
         }
     }
 
-    private void HitTarget(GameObject player, Collider2D target)
+    private void HitTarget(SkillContext context, Collider2D target)
     {
-        PlayerStats playerStats =
-            player.GetComponent<PlayerStats>();
+        float damage = context.Stats.Attack * damageMultiplier;
 
-        float damage =
-            playerStats.Attack * damageMultiplier;
-
-        Debug.Log(
-            $"Hit {target.name} for {damage} damage!"
+        SkillHitProcessor.ApplyHit(
+            target.GetComponentInParent<EnemyHealth>(),
+            damage,
+            context.Caster.transform.position,
+            context.Modifiers
         );
-
-        // Eventually:
-        // target.GetComponent<EnemyHealth>()?.TakeDamage(damage);
     }
 
     private void DrawDebugSector(

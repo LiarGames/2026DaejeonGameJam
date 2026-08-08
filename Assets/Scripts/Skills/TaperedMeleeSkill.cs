@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skills/Tapered Melee Skill")]
-public class TaperedMeleeSkill : Skill
+public class TaperedMeleeSkill : AttackSkill
 {
     [SerializeField] private float length = 2f;
 
@@ -49,10 +49,12 @@ public class TaperedMeleeSkill : Skill
     {
         float damage = context.Stats.Attack * damageMultiplier;
 
-        Debug.Log($"Hit {target.name} for {damage} damage!");
-
-        // Eventually:
-        // target.GetComponent<EnemyHealth>()?.TakeDamage(damage);
+        SkillHitProcessor.ApplyHit(
+            target.GetComponentInParent<EnemyHealth>(),
+            damage,
+            context.Caster.transform.position,
+            context.Modifiers
+        );
     }
 
     private void DrawDebugShape(

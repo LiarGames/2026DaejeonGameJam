@@ -8,19 +8,22 @@ public class AoEZone : MonoBehaviour
     private float _tickInterval;
     private float _damagePerTick;
     private LayerMask _enemyLayer;
+    private SkillModifiers _modifiers;
 
     public void Initialize(
         float radius,
         float duration,
         float tickInterval,
         float damagePerTick,
-        LayerMask enemyLayer)
+        LayerMask enemyLayer,
+        SkillModifiers modifiers)
     {
         _radius = Mathf.Max(0f, radius);
         _duration = Mathf.Max(0f, duration);
         _tickInterval = Mathf.Max(0.01f, tickInterval);
         _damagePerTick = damagePerTick;
         _enemyLayer = enemyLayer;
+        _modifiers = modifiers;
 
         StartCoroutine(RunZone());
     }
@@ -50,12 +53,12 @@ public class AoEZone : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            Debug.Log(
-                $"AoE hit {hit.name} for {_damagePerTick} damage!"
+            SkillHitProcessor.ApplyHit(
+                hit.GetComponentInParent<EnemyHealth>(),
+                _damagePerTick,
+                transform.position,
+                _modifiers
             );
-
-            // Eventually:
-            // hit.GetComponent<EnemyHealth>()?.TakeDamage(_damagePerTick);
         }
     }
 

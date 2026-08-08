@@ -6,11 +6,16 @@ public class Projectile : MonoBehaviour
 
     private float _damage;
     private LayerMask _enemyLayer;
+    private SkillModifiers _modifiers;
 
-    public void Initialize(float damage, LayerMask enemyLayer)
+    public void Initialize(
+        float damage,
+        LayerMask enemyLayer,
+        SkillModifiers modifiers)
     {
         _damage = damage;
         _enemyLayer = enemyLayer;
+        _modifiers = modifiers;
     }
 
     private void Start()
@@ -29,11 +34,11 @@ public class Projectile : MonoBehaviour
 
     private void ApplyDamage(Collider2D target)
     {
-        Debug.Log(
-            $"Projectile hit {target.name} for {_damage} damage!"
+        SkillHitProcessor.ApplyHit(
+            target.GetComponentInParent<EnemyHealth>(),
+            _damage,
+            transform.position,
+            _modifiers
         );
-
-        // Eventually:
-        // target.GetComponent<EnemyHealth>()?.TakeDamage(_damage);
     }
 }

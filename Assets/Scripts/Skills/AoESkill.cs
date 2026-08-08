@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skills/AoE Skill")]
-public class AoESkill : Skill
+public class AoESkill : AttackSkill
 {
     [SerializeField] private float castDistance = 3f;
     [SerializeField] private float radius = 1f;
@@ -38,7 +38,8 @@ public class AoESkill : Skill
             duration,
             tickInterval,
             damagePerTick,
-            context.EnemyLayer
+            context.EnemyLayer,
+            context.Modifiers
         );
 
         DrawDebugShape(
