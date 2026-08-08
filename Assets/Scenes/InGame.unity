@@ -505,6 +505,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1335333317}
+    - target: {fileID: 3560255735996239358, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
+      propertyPath: attackSkill
+      value: 
+      objectReference: {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
+    - target: {fileID: 3560255735996239358, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
+      propertyPath: closeRangeAttackSkill
+      value: 
+      objectReference: {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
     - target: {fileID: 7347026216957143015, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
       propertyPath: m_Name
       value: Enemy

@@ -210,7 +210,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   player: {fileID: 0}
   enemyself: {fileID: 6436756529074900210}
-  projectilePrefab: {fileID: 5740732965750497648, guid: 947c5fd2b239fd64ca1a39cfedd20664, type: 3}
-  projectileSpeed: 10
-  meleeHitboxPrefab: {fileID: 0}
-  meleeOffset: 1
+  attackSkill: {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
+  closeRangeAttackSkill: {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
+  closeRangeAttackDistance: 2
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
