@@ -54,11 +54,11 @@ public class ProjectileSkill : AttackSkill
             return;
         }
 
-        float damage = context.Stats.Attack * damageMultiplier;
+        float damage = context.AttackPower * damageMultiplier;
 
         projectileComponent.Initialize(
             damage,
-            context.EnemyLayer,
+            context.TargetLayer,
             context.Modifiers
         );
         rb.linearVelocity = direction * projectileSpeed;

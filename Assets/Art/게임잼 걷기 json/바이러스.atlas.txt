@@ -1,6 +1,6 @@
 바이러스.png
 size:496,125
-filter:Linear,Linear
+filter:Nearest,Nearest
 pma:true
 망토
 bounds:171,11,112,97

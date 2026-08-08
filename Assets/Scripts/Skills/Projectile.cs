@@ -5,16 +5,16 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float lifetime = 3f;
 
     private float _damage;
-    private LayerMask _enemyLayer;
+    private LayerMask _targetLayer;
     private SkillModifiers _modifiers;
 
     public void Initialize(
         float damage,
-        LayerMask enemyLayer,
+        LayerMask targetLayer,
         SkillModifiers modifiers)
     {
         _damage = damage;
-        _enemyLayer = enemyLayer;
+        _targetLayer = targetLayer;
         _modifiers = modifiers;
     }
 
@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((_enemyLayer.value & (1 << other.gameObject.layer)) == 0)
+        if ((_targetLayer.value & (1 << other.gameObject.layer)) == 0)
             return;
 
         ApplyDamage(other);
@@ -35,7 +35,7 @@ public class Projectile : MonoBehaviour
     private void ApplyDamage(Collider2D target)
     {
         SkillHitProcessor.ApplyHit(
-            target.GetComponentInParent<EnemyHealth>(),
+            target,
             _damage,
             transform.position,
             _modifiers

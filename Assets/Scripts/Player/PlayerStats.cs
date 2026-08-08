@@ -12,7 +12,7 @@ public enum StatType
 }
 
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, IDamageable
 {
     [SerializeField] private PlayerStatsData data;
 
@@ -76,9 +76,9 @@ public class PlayerStats : MonoBehaviour
 
         Debug.Log($"Player leveled up to level {Level}");
 
-        UpgradeStat(StatType.Attack);
-        UpgradeStat(StatType.MaxHealth);
-        UpgradeStat(StatType.MaxMana);
+        // UpgradeStat(StatType.Attack);
+        // UpgradeStat(StatType.MaxHealth);
+        // UpgradeStat(StatType.MaxMana);
     }
 
     public void TakeDamage(float amount)

@@ -3,8 +3,8 @@ using UnityEngine;
 public struct SkillContext
 {
     public GameObject Caster;
-    public PlayerStats Stats;
+    public float AttackPower;
     public Vector2 Direction;
-    public LayerMask EnemyLayer;
+    public LayerMask TargetLayer;
     public SkillModifiers Modifiers;
 }

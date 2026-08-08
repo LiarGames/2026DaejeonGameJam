@@ -11,9 +11,12 @@ GameObject:
   - component: {fileID: 8058048308883926217}
   - component: {fileID: 1423946882416223461}
   - component: {fileID: 6436756529074900210}
+  - component: {fileID: 8127746388614181264}
+  - component: {fileID: 6767482280570981234}
+  - component: {fileID: 5205462469000000001}
   - component: {fileID: 3560255735996239358}
-  m_Layer: 6
-  m_Name: Enemy
+  m_Layer: 7
+  m_Name: RangedEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,6 +123,79 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!61 &8127746388614181264
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347026216957143015}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &6767482280570981234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347026216957143015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41bef9c00b6540eb93f9b1021fa33736, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  data: {fileID: 11400000, guid: 8fa9308ea5774078b1d1cd9f46f67667, type: 2}
+  experienceGemPrefab: {fileID: 4280000000000000004, guid: 3dc9db370b4a40cabd0569f681325f29, type: 3}
+--- !u!114 &5205462469000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347026216957143015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceab13bef8e74aed9313281caf7dff3a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  _rb: {fileID: 6436756529074900210}
 --- !u!114 &3560255735996239358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,9 +206,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099116b6a0b2adb488f6e66306a92e27, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  moveSpeed: 5
   player: {fileID: 0}
   enemyself: {fileID: 6436756529074900210}
-  attackRange: 5
+  attackSkill: {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
+  closeRangeAttackSkill: {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
+  closeRangeAttackDistance: 2
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64

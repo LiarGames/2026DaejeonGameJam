@@ -7,7 +7,7 @@ public class AoEZone : MonoBehaviour
     private float _duration;
     private float _tickInterval;
     private float _damagePerTick;
-    private LayerMask _enemyLayer;
+    private LayerMask _targetLayer;
     private SkillModifiers _modifiers;
 
     public void Initialize(
@@ -15,14 +15,14 @@ public class AoEZone : MonoBehaviour
         float duration,
         float tickInterval,
         float damagePerTick,
-        LayerMask enemyLayer,
+        LayerMask targetLayer,
         SkillModifiers modifiers)
     {
         _radius = Mathf.Max(0f, radius);
         _duration = Mathf.Max(0f, duration);
         _tickInterval = Mathf.Max(0.01f, tickInterval);
         _damagePerTick = damagePerTick;
-        _enemyLayer = enemyLayer;
+        _targetLayer = targetLayer;
         _modifiers = modifiers;
 
         StartCoroutine(RunZone());
@@ -48,13 +48,13 @@ public class AoEZone : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(
             transform.position,
             _radius,
-            _enemyLayer
+            _targetLayer
         );
 
         foreach (Collider2D hit in hits)
         {
             SkillHitProcessor.ApplyHit(
-                hit.GetComponentInParent<EnemyHealth>(),
+                hit,
                 _damagePerTick,
                 transform.position,
                 _modifiers

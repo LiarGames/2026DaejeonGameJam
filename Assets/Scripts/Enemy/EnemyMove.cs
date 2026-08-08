@@ -1,26 +1,47 @@
+using System.Collections;
 using UnityEngine;
 
-
+[RequireComponent(typeof(EnemyStats), typeof(Rigidbody2D))]
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private Rigidbody2D enemyself;
-    [SerializeField] private float attackRange = 5f;
 
     [Header("Attack")]
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private float projectileSpeed = 10f;
-    [SerializeField] private float fireCooldown = 1f;
+    [SerializeField] private AttackSkill attackSkill;
+    [SerializeField] private AttackSkill closeRangeAttackSkill;
+    [Min(0f)]
+    [SerializeField] private float closeRangeAttackDistance = 2f;
+    [SerializeField] private LayerMask targetLayer;
 
-    [Header("Melee")]
-    [SerializeField] private GameObject meleeHitboxPrefab;
-    [SerializeField] private float meleeDamage = 10f;
-    [SerializeField] private float meleeOffset = 1f; // 적 앞쪽으로 히트박스를 얼마나 내보낼지
-
+    private EnemyStats stats;
     private float fireTimer;
+    private bool isAttacking;
 
+    private void Awake()
+    {
+        stats = GetComponent<EnemyStats>();
 
+        if (enemyself == null)
+            enemyself = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        if (player != null)
+            return;
+
+        PlayerStats playerStats = FindFirstObjectByType<PlayerStats>();
+
+        if (playerStats != null)
+            player = playerStats.GetComponent<Rigidbody2D>();
+
+        if (player == null)
+        {
+            Debug.LogError($"Player target was not found for {name}.", this);
+            enabled = false;
+        }
+    }
 
     private void Awake()
     {
@@ -39,63 +60,89 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (player == null)
+        if (isAttacking)
+        {
+            StopMovement();
             return;
+        }
 
         Vector2 playerPosition = player.position;
         Vector2 currentPosition = enemyself.position;
         Vector2 difference = playerPosition - currentPosition;
 
-        if (difference.sqrMagnitude < attackRange * attackRange)
+        if (difference.sqrMagnitude < stats.AttackRange * stats.AttackRange)
         {
-            enemyself.linearVelocity = Vector2.zero;
+            StopMovement();
 
             fireTimer -= Time.fixedDeltaTime;
-            if (fireTimer <= 0f)
+            AttackSkill selectedAttack =
+                SelectAttack(difference.sqrMagnitude);
+
+            if (fireTimer <= 0f && selectedAttack != null)
             {
-                if (attackRange > 2f)
-                    FireProjectile(difference.normalized);
-                else
-                    MeleeAttack(difference.normalized);
-                fireTimer = fireCooldown;
+                StartCoroutine(PerformAttack(
+                    selectedAttack,
+                    difference.normalized
+                ));
+                fireTimer = stats.AttackCooldown;
             }
             return;
         }
 
-        enemyself.linearVelocity = difference.normalized * moveSpeed;
+        enemyself.linearVelocity = difference.normalized * stats.MoveSpeed;
     }
 
-    private void FireProjectile(Vector2 direction)
+    private AttackSkill SelectAttack(float squaredDistance)
     {
-        if (projectilePrefab == null)
-            return;
+        float closeRangeSquared =
+            closeRangeAttackDistance * closeRangeAttackDistance;
 
-        GameObject projectile = Instantiate(
-            projectilePrefab,
-            enemyself.position,
-            Quaternion.identity
-        );
+        if (closeRangeAttackSkill != null &&
+            squaredDistance <= closeRangeSquared)
+        {
+            return closeRangeAttackSkill;
+        }
 
-        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-        if (rb != null)
-            rb.linearVelocity = direction * projectileSpeed;
+        return attackSkill;
     }
-    private void MeleeAttack(Vector2 direction)
+
+    private IEnumerator PerformAttack(
+        AttackSkill selectedAttack,
+        Vector2 direction)
     {
-        if (meleeHitboxPrefab == null)
-            return;
+        isAttacking = true;
+        StopMovement();
 
-        // 공격 방향 앞쪽에 히트박스를 생성.
-        Vector2 spawnPos = enemyself.position + direction * meleeOffset;
+        try
+        {
+            yield return new WaitForSeconds(selectedAttack.ProcessDuration);
 
-        // 히트박스가 플레이어 쪽을 향하도록 회전.
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+            SkillContext context = new SkillContext
+            {
+                Caster = gameObject,
+                AttackPower = stats.Attack,
+                Direction = direction,
+                TargetLayer = targetLayer,
+                Modifiers = SkillModifiers.Default
+            };
 
-        GameObject hitbox = Instantiate(meleeHitboxPrefab, spawnPos, rotation);
+            selectedAttack.Activate(context);
 
-        MeleeHitbox melee = hitbox.GetComponent<MeleeHitbox>();
-        if (melee != null)
-            melee.Initialize(meleeDamage);
+            yield return new WaitForSeconds(selectedAttack.RecoveryDuration);
+        }
+        finally
+        {
+            isAttacking = false;
+        }
+    }
+
+    private void OnDisable()
+    {
+        isAttacking = false;
+    }
+
+    private void StopMovement()
+    {
+        enemyself.linearVelocity = Vector2.zero;
     }
 }
