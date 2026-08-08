@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ead33b5294d55004fbff7569694aff01, type: 3}
-  m_Name: TestMelee
+  m_Name: TestMelee 1
   m_EditorClassIdentifier: Assembly-CSharp::MeleeSkill
   vfxPrefab: {fileID: 3844118754778442563, guid: 0417cdcd030ec9547b24c33fe9794a68, type: 3}
   vfxLifetime: 0.15

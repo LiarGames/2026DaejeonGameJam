@@ -44,6 +44,13 @@ public class AoESkill : AttackSkill
             context.Modifiers
         );
 
+        SpawnVFX(
+            spawnPosition,
+            context.Direction,
+            zone.transform,
+            Vector3.one * effectiveLength
+        );
+
         DrawDebugShape(
             context.Caster.transform.position,
             spawnPosition,
