@@ -32,6 +32,16 @@ public class PlayerInputHandler : MonoBehaviour, PlayerInput.IPlayerActions
         _input.Dispose();
     }
 
+    private void Update()
+    {
+        // ESC로 일시정지 토글. (timeScale 0에서도 입력/Update는 동작)
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.TogglePause();
+        }
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 movementInput = context.ReadValue<Vector2>();

@@ -92,8 +92,8 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     private void Die()
     {
-        //TODO
-        Debug.Log("Player died");
+        if (GameManager.Instance != null)
+            GameManager.Instance.GameOver();
     }
 
     public void UpgradeStat(StatType stat)
