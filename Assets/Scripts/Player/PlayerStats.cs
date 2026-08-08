@@ -27,6 +27,10 @@ public class PlayerStats : MonoBehaviour
     public float CurrentHealth { get; private set; }
     public float CurrentMana { get; private set; }
 
+    public int Level { get; private set; } = 1;
+    public float CurrentExperience { get; private set; }
+    public float ExperienceToLevelUp { get; private set; } = 100f;
+
     private void Awake()
     {   
         Attack = data.startingAttack;
@@ -39,12 +43,42 @@ public class PlayerStats : MonoBehaviour
 
         CurrentHealth = MaxHealth;
         CurrentMana = MaxMana;
+
+        Level = 1;
+        CurrentExperience = 0f;
+        ExperienceToLevelUp = 100f;
     }
 
     private void Update()
     {
         RegenerateHealth();
         RegenerateMana(); 
+    }
+
+    public void GainExperience(float amount)
+    {
+        if (amount <= 0f)
+            return;
+
+        CurrentExperience += amount;
+
+        while (CurrentExperience >= ExperienceToLevelUp)
+        {
+            CurrentExperience -= ExperienceToLevelUp;
+            LevelUp();
+        }
+    }
+
+    public void LevelUp()
+    {
+        Level++;
+        ExperienceToLevelUp += 20f;
+
+        Debug.Log($"Player leveled up to level {Level}");
+
+        UpgradeStat(StatType.Attack);
+        UpgradeStat(StatType.MaxHealth);
+        UpgradeStat(StatType.MaxMana);
     }
 
     public void TakeDamage(float amount)
