@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c47cfd480b43c293211f82e7385ad5, type: 3}
   m_Name: PlayerAoEBadSector
   m_EditorClassIdentifier: Assembly-CSharp::AoESkill
-  vfxPrefab: {fileID: 3844118754778442563, guid: 2207fd4d2fa8f884eb645292115159a6, type: 3}
+  vfxPrefab: {fileID: 3844118754778442563, guid: 887b82be05e4e0c499dc7d10bc1ab836, type: 3}
   vfxLifetime: 3
   damageMultiplier: 1
   processDuration: 0
