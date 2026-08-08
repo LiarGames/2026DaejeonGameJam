@@ -13,7 +13,7 @@ public class TaperedMeleeSkill : AttackSkill
 
     public override void Activate(SkillContext context)
     {
-        Vector2 origin = context.Caster.transform.position;
+        Vector2 origin = GetCastPosition(context);
         Vector2 forward = context.Direction.normalized;
         Vector2 right = new Vector2(forward.y, -forward.x);
         float effectiveLength = length * context.Modifiers.RangeMultiplier;
@@ -40,27 +40,34 @@ public class TaperedMeleeSkill : AttackSkill
                 (effectiveLength - forwardDistance);
 
             if (Mathf.Abs(sideDistance) <= allowedHalfWidth)
-                HitTarget(context, target);
+                HitTarget(context, target, origin);
         }
+
+        float effectiveWidth =
+            2f * Mathf.Tan(tipAngle * 0.5f * Mathf.Deg2Rad) *
+            effectiveLength;
 
         SpawnVFX(
             origin,
             forward,
             null,
-            Vector3.one * effectiveLength
+            new Vector3(effectiveLength, effectiveWidth, 1f)
         );
 
         DrawDebugShape(origin, forward, context);
     }
 
-    private void HitTarget(SkillContext context, Collider2D target)
+    private void HitTarget(
+        SkillContext context,
+        Collider2D target,
+        Vector2 origin)
     {
         float damage = context.AttackPower * damageMultiplier;
 
         SkillHitProcessor.ApplyHit(
             target,
             damage,
-            context.Caster.transform.position,
+            origin,
             context.Modifiers
         );
     }

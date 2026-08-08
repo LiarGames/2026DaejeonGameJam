@@ -47,6 +47,8 @@ public class LevelUpController : MonoBehaviour
     {
         if (GameManager.Instance != null)
             GameManager.Instance.EnterLevelUp();
+        else
+            Debug.LogError("[LevelUp] 씬에 GameManager가 없어 게임이 멈추지 않습니다.", this);
 
         OnCardsOffered?.Invoke(RollChoices());
     }
@@ -86,17 +88,6 @@ public class LevelUpController : MonoBehaviour
             if (c != null && c.Skill == skill)
                 return c;
         }
-
-        // 진단: 풀에 실제로 어떤 카드/스킬이 들어있는지 출력
-        string dump = "";
-        for (int i = 0; i < cardPool.Length; i++)
-        {
-            Card c = cardPool[i];
-            dump += c == null
-                ? $"\n  [{i}] (빈 슬롯)"
-                : $"\n  [{i}] 카드='{c.name}' → Skill={(c.Skill != null ? c.Skill.name : "null(미할당)")}";
-        }
-        Debug.LogWarning($"[Pool] '{skill.name}' 매칭 실패. 풀 크기={cardPool.Length}{dump}");
 
         return null;
     }

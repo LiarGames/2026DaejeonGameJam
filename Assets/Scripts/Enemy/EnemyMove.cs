@@ -22,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] private AttackSkill attackSkill;
+    [SerializeField] private Transform skillOrigin;
     [SerializeField] private LayerMask targetLayer;
 
     private EnemyStats stats;
@@ -212,6 +213,8 @@ public class EnemyMovement : MonoBehaviour
                 new SkillContext
                 {
                     Caster = gameObject,
+                    CastOrigin = skillOrigin,
+                    FacingDirection = direction,
                     AttackPower = stats.Attack,
                     Direction = direction,
                     TargetLayer = targetLayer,

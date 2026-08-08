@@ -11,19 +11,19 @@ public class MeleeSkill : AttackSkill
 
     public override void Activate(SkillContext context)
     {   
-        PerformAttack(context);
+        Vector2 origin = GetCastPosition(context);
+
+        PerformAttack(context, origin);
 
         float effectiveRadius =
             radius * context.Modifiers.RangeMultiplier;
 
         SpawnVFX(
-            context.Caster.transform.position,
+            origin,
             context.Direction,
             null,
             Vector3.one * effectiveRadius
         );
-
-        Vector2 origin = context.Caster.transform.position;
 
         DrawDebugSector(
             origin,
@@ -33,12 +33,12 @@ public class MeleeSkill : AttackSkill
         );
     }
 
-    private void PerformAttack(SkillContext context)
+    private void PerformAttack(SkillContext context, Vector2 origin)
     {   
         float effectiveRadius = radius * context.Modifiers.RangeMultiplier;
 
         Collider2D[] targets = Physics2D.OverlapCircleAll(
-            context.Caster.transform.position,
+            origin,
             effectiveRadius,
             context.TargetLayer
         );
@@ -47,26 +47,29 @@ public class MeleeSkill : AttackSkill
         {
             Vector2 directionToTarget =
                 ((Vector2)target.transform.position -
-                 (Vector2)context.Caster.transform.position).normalized;
+                 origin).normalized;
 
             float targetAngle =
                 Vector2.Angle(context.Direction, directionToTarget);
 
             if (targetAngle <= angle / 2f)
             {
-                HitTarget(context, target);
+                HitTarget(context, target, origin);
             }
         }
     }
 
-    private void HitTarget(SkillContext context, Collider2D target)
+    private void HitTarget(
+        SkillContext context,
+        Collider2D target,
+        Vector2 origin)
     {
         float damage = context.AttackPower * damageMultiplier;
 
         SkillHitProcessor.ApplyHit(
             target,
             damage,
-            context.Caster.transform.position,
+            origin,
             context.Modifiers
         );
     }

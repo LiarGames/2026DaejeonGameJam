@@ -637,6 +637,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &943753495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 943753496}
+  m_Layer: 6
+  m_Name: SkillOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &943753496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943753495}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1335333313}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1153144309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,6 +1109,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 943753496}
   - {fileID: 1246516780}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1095,11 +1127,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillController
   _playerStats: {fileID: 1335333318}
   _equippedSkills:
-  - {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
-  - {fileID: 11400000, guid: 1b9125564cfb15e4e81af93d2afaf71d, type: 2}
-  - {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
+  - {fileID: 11400000, guid: ab529d7f1c9f5d84cb09b2367017ec2a, type: 2}
+  - {fileID: 11400000, guid: a00898bbdf835784982accd8b74b9682, type: 2}
   _playerMovement: {fileID: 1335333315}
   _stateController: {fileID: 1335333319}
+  _skillOrigin: {fileID: 943753496}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

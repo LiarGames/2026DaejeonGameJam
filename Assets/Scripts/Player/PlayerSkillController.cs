@@ -10,6 +10,7 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] private List<Skill> _equippedSkills = new List<Skill>();
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private PlayerStateController _stateController;
+    [SerializeField] private Transform _skillOrigin;
     [SerializeField] private LayerMask enemyLayer;
     
     [SerializeField] private float _turnInterval = 1f;
@@ -24,6 +25,9 @@ public class PlayerSkillController : MonoBehaviour
     {
         if (_stateController == null)
             _stateController = GetComponent<PlayerStateController>();
+
+        if (_skillOrigin == null)
+            _skillOrigin = transform.Find("SkillOrigin");
     }
 
     private void Update()
@@ -134,6 +138,8 @@ public class PlayerSkillController : MonoBehaviour
         return new SkillContext
         {
             Caster = gameObject,
+            CastOrigin = _skillOrigin,
+            FacingDirection = _playerMovement.LastMoveDirection,
             AttackPower = _playerStats.Attack,
             Direction = attackDirection,
             TargetLayer = enemyLayer,

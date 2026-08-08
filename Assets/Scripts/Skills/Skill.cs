@@ -10,17 +10,41 @@ public abstract class Skill : ScriptableObject
     public void PlayCasterVFX(SkillContext context)
     {
         SpawnVFX(
-            context.Caster.transform.position,
+            GetSkillOriginPosition(context),
             context.Direction,
             context.Caster.transform
         );
+    }
+
+    protected Vector2 GetSkillOriginPosition(SkillContext context)
+    {
+        Transform caster = context.Caster.transform;
+
+        if (context.CastOrigin == null)
+            return caster.position;
+
+        Vector3 localPosition = caster.InverseTransformPoint(
+            context.CastOrigin.position
+        );
+
+        Vector2 facing = context.FacingDirection.sqrMagnitude > 0.001f
+            ? context.FacingDirection
+            : context.Direction;
+
+        if (Mathf.Abs(facing.x) > 0.01f)
+        {
+            localPosition.x =
+                Mathf.Abs(localPosition.x) * Mathf.Sign(facing.x);
+        }
+
+        return caster.TransformPoint(localPosition);
     }
 
     protected GameObject SpawnVFX(
         Vector2 position,
         Vector2 direction,
         Transform parent = null,
-        Vector3? localScale = null)
+        Vector3? scaleMultiplier = null)
     {
         if (vfxPrefab == null)
             return null;
@@ -35,8 +59,13 @@ public abstract class Skill : ScriptableObject
         if (parent != null)
             vfx.transform.SetParent(parent, true);
 
-        if (localScale.HasValue)
-            vfx.transform.localScale = localScale.Value;
+        if (scaleMultiplier.HasValue)
+        {
+            vfx.transform.localScale = Vector3.Scale(
+                vfx.transform.localScale,
+                scaleMultiplier.Value
+            );
+        }
 
         if (vfxLifetime > 0f)
             Destroy(vfx, vfxLifetime);
