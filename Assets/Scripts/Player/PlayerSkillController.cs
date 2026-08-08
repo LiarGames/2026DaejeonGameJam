@@ -125,16 +125,65 @@ public class PlayerSkillController : MonoBehaviour
     }
 
     private SkillContext CreateSkillContext(SkillModifiers modifiers)
-    {
+    {   
+        Vector2 attackDirection = GetTargetDirection();
+
         return new SkillContext
         {
             Caster = gameObject,
             AttackPower = _playerStats.Attack,
-            Direction = _playerMovement.LastMoveDirection,
+            Direction = attackDirection,
             TargetLayer = enemyLayer,
             Modifiers = modifiers
         };
     }
+
+    private Vector2 GetTargetDirection()
+{
+    EnemyStats[] enemies =
+        FindObjectsByType<EnemyStats>(FindObjectsSortMode.None);
+
+    Vector2 playerPosition = transform.position;
+
+    Vector2 closestPosition = Vector2.zero;
+    float closestDistanceSquared = Mathf.Infinity;
+    bool foundEnemy = false;
+
+    foreach (EnemyStats enemy in enemies)
+    {
+        if (enemy == null || !enemy.gameObject.activeInHierarchy)
+            continue;
+
+        Collider2D enemyCollider =
+            enemy.GetComponent<Collider2D>();
+
+        Vector2 enemyPosition =
+            enemyCollider != null
+                ? enemyCollider.bounds.center
+                : enemy.transform.position;
+
+        float distanceSquared =
+            (enemyPosition - playerPosition).sqrMagnitude;
+
+        if (distanceSquared >= closestDistanceSquared)
+            continue;
+
+        closestDistanceSquared = distanceSquared;
+        closestPosition = enemyPosition;
+        foundEnemy = true;
+    }
+
+    if (!foundEnemy)
+        return _playerMovement.LastMoveDirection;
+
+    Vector2 direction =
+        closestPosition - playerPosition;
+
+    if (direction.sqrMagnitude <= 0.001f)
+        return _playerMovement.LastMoveDirection;
+
+    return direction.normalized;
+}
     
     private void AdvanceToNextSkill()
     {
