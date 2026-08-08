@@ -9,14 +9,19 @@ public class MeleeSkill : AttackSkill
     [Range(0f, 360f)]
     [SerializeField] private float angle = 90f;
 
-    [Header("Visual")]
-    [SerializeField] private GameObject vfxPrefab;
-    [SerializeField] private float vfxLifetime = 0.15f;
-
     public override void Activate(SkillContext context)
     {   
         PerformAttack(context);
-        SpawnVFX(context);
+
+        float effectiveRadius =
+            radius * context.Modifiers.RangeMultiplier;
+
+        SpawnVFX(
+            context.Caster.transform.position,
+            context.Direction,
+            null,
+            Vector3.one * effectiveRadius
+        );
 
         Vector2 origin = context.Caster.transform.position;
 
@@ -26,30 +31,6 @@ public class MeleeSkill : AttackSkill
             radius * context.Modifiers.RangeMultiplier,
             angle
         );
-    }
-
-    private void SpawnVFX(SkillContext context)
-    {
-        if (vfxPrefab == null)
-            return;
-        
-        Vector2 position = context.Caster.transform.position;
-
-        float rotation =
-            Mathf.Atan2(
-                context.Direction.y,
-                context.Direction.x
-            ) * Mathf.Rad2Deg;
-
-        GameObject vfx = Instantiate(
-            vfxPrefab,
-            position,
-            Quaternion.Euler(0f, 0f, rotation)
-        );
-
-        vfx.transform.localScale = Vector3.one * radius;
-
-        Destroy(vfx, vfxLifetime);
     }
 
     private void PerformAttack(SkillContext context)

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead33b5294d55004fbff7569694aff01, type: 3}
   m_Name: TestMelee
   m_EditorClassIdentifier: Assembly-CSharp::MeleeSkill
+  vfxPrefab: {fileID: 3844118754778442563, guid: 0417cdcd030ec9547b24c33fe9794a68, type: 3}
+  vfxLifetime: 0.15
   damageMultiplier: 1
   processDuration: 0.3
   recoveryDuration: 0.1
   radius: 2
   angle: 90
-  vfxPrefab: {fileID: 1974060473007221986, guid: ad3144512e1d74041a76b9f186c3ddf4, type: 3}
-  vfxLifetime: 0.15

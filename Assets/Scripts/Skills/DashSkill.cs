@@ -33,5 +33,11 @@ public class DashSkill : AttackSkill
             dashSpeed,
             dashDuration
         );
+
+        SpawnVFX(
+            context.Caster.transform.position,
+            context.Direction,
+            context.Caster.transform
+        );
     }
 }

@@ -78,6 +78,9 @@ public class PlayerSkillController : MonoBehaviour
         if (skill is SupportSkill supportSkill)
         {
             supportSkill.ApplyModifier(ref _pendingModifiers);
+            supportSkill.PlayCasterVFX(
+                CreateSkillContext(_pendingModifiers)
+            );
             _attackDuration = 0f; // 시전 없음
             _attackElapsed = 0f;
             AdvanceToNextSkill();

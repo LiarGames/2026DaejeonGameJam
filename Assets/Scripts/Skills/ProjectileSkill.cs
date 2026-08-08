@@ -61,6 +61,13 @@ public class ProjectileSkill : AttackSkill
             context.TargetLayer,
             context.Modifiers
         );
+
+        SpawnVFX(
+            playerPosition,
+            direction,
+            projectile.transform
+        );
+
         rb.linearVelocity = direction * projectileSpeed;
     }
 }

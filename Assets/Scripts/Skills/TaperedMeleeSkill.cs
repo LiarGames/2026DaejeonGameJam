@@ -43,6 +43,13 @@ public class TaperedMeleeSkill : AttackSkill
                 HitTarget(context, target);
         }
 
+        SpawnVFX(
+            origin,
+            forward,
+            null,
+            Vector3.one * effectiveLength
+        );
+
         DrawDebugShape(origin, forward, context);
     }
 

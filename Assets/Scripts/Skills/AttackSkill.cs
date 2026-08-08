@@ -10,4 +10,5 @@ public abstract class AttackSkill : Skill
     public float RecoveryDuration => recoveryDuration;
 
     public abstract void Activate(SkillContext context);
+
 }

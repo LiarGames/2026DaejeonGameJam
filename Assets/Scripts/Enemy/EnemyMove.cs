@@ -25,6 +25,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private LayerMask targetLayer;
 
     private EnemyStats stats;
+    private Collider2D movementBounds;
     private float fireTimer;
     private bool isAttacking;
 
@@ -38,15 +39,26 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
+        PlayerMovement playerMovement = null;
+
         if (player != null)
-            return;
+            playerMovement = player.GetComponent<PlayerMovement>();
+        else
+        {
+            PlayerStats playerStats = FindFirstObjectByType<PlayerStats>();
 
-        PlayerStats playerStats =
-            FindFirstObjectByType<PlayerStats>();
+            if (playerStats != null)
+            {
+                player = playerStats.GetComponent<Rigidbody2D>();
+                playerMovement = playerStats.GetComponent<PlayerMovement>();
+            }
+        }
 
-        if (playerStats != null)
-            player =
-                playerStats.GetComponent<Rigidbody2D>();
+        if (playerMovement == null)
+            playerMovement = FindFirstObjectByType<PlayerMovement>();
+
+        if (playerMovement != null)
+            movementBounds = playerMovement.MovementBounds;
 
         if (player == null)
         {
@@ -129,14 +141,15 @@ public class EnemyMovement : MonoBehaviour
         Vector2 difference,
         float squaredDistance)
     {
-        float minRange =
-            preferredRange - rangeTolerance;
+        if (!IsInsideMovementBounds())
+        {
+            enemyself.linearVelocity =
+                difference.normalized * stats.MoveSpeed;
+            return;
+        }
 
         float maxRange =
             preferredRange + rangeTolerance;
-
-        float minRangeSquared =
-            minRange * minRange;
 
         float maxRangeSquared =
             maxRange * maxRange;
@@ -145,11 +158,6 @@ public class EnemyMovement : MonoBehaviour
         {
             enemyself.linearVelocity =
                 difference.normalized * stats.MoveSpeed;
-        }
-        else if (squaredDistance < minRangeSquared)
-        {
-            enemyself.linearVelocity =
-                -difference.normalized * stats.MoveSpeed;
         }
         else
         {
@@ -161,6 +169,10 @@ public class EnemyMovement : MonoBehaviour
         Vector2 difference,
         float squaredDistance)
     {
+        if (movementType == EnemyMovementType.Ranged &&
+            !IsInsideMovementBounds())
+            return;
+
         float attackRangeSquared =
             stats.AttackRange * stats.AttackRange;
 
@@ -227,5 +239,13 @@ public class EnemyMovement : MonoBehaviour
     {
         enemyself.linearVelocity =
             Vector2.zero;
+    }
+
+    private bool IsInsideMovementBounds()
+    {
+        if (movementBounds == null)
+            return true;
+
+        return movementBounds.bounds.Contains(enemyself.position);
     }
 }
