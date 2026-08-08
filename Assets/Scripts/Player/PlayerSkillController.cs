@@ -13,6 +13,7 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] private float _turnInterval = 1f;
     private int _currentSkillIndex;
     private float _skillTimer;
+    private SkillModifiers _pendingModifiers = SkillModifiers.Default;
 
     private void Awake()
     {
@@ -35,45 +36,78 @@ public class PlayerSkillController : MonoBehaviour
         if (_skillTimer < _turnInterval)
             return;
 
-        _skillTimer = 0f;
+        Skill skill = GetCurrentSkill();
 
-        StartCurrentSkill();
-        AdvanceToNextSkill();
+        if (skill is AttackSkill && !_stateController.CanAttack())
+            return;
+
+        _skillTimer = 0f;
+        ProcessCurrentSkill(skill);
     }
 
-    private void StartCurrentSkill()
+    private Skill GetCurrentSkill()
     {
         Skill skill = _equippedSkills[_currentSkillIndex];
 
         if (skill == null)
-            return;
+        {
+            AdvanceToNextSkill();
+            skill = _equippedSkills[_currentSkillIndex];
+        }
 
-        StartCoroutine(PerformSkill(skill));
+        return skill;
     }
 
-    private IEnumerator PerformSkill(Skill skill)
+    private void ProcessCurrentSkill(Skill skill)
     {
+        if (skill is SupportSkill supportSkill)
+        {
+            supportSkill.ApplyModifier(ref _pendingModifiers);
+            AdvanceToNextSkill();
+            return;
+        }
+
+        if (skill is AttackSkill attackSkill)
+        {
+            StartCoroutine(PerformSkill(attackSkill));
+            AdvanceToNextSkill();
+        }
+    }
+
+    private IEnumerator PerformSkill(AttackSkill skill)
+    {
+        SkillModifiers modifiers = _pendingModifiers;
+        float castSpeedMultiplier =
+            Mathf.Max(0.01f, modifiers.CastSpeedMultiplier);
+        float effectiveProcessDuration =
+            skill.ProcessDuration / castSpeedMultiplier;
+
         _stateController.ChangeState(PlayerState.Attacking);
         _playerMovement.StopMovement();
 
-        yield return new WaitForSeconds(skill.ProcessDuration);
+        yield return new WaitForSeconds(effectiveProcessDuration);
 
-        skill.Activate(CreateSkillContext());
+        skill.Activate(CreateSkillContext(modifiers));
+        _pendingModifiers = SkillModifiers.Default;
 
-        yield return new WaitForSeconds(skill.RecoveryDuration);
+        float effectiveRecoveryDuration = 
+            skill.RecoveryDuration / castSpeedMultiplier;
+
+        yield return new WaitForSeconds(effectiveRecoveryDuration);
 
         if (_stateController.CurrentState == PlayerState.Attacking)
             _stateController.ChangeState(PlayerState.Idle);
     }
 
-    private SkillContext CreateSkillContext()
+    private SkillContext CreateSkillContext(SkillModifiers modifiers)
     {
         return new SkillContext
         {
             Caster = gameObject,
             Stats = _playerStats,
             Direction = _playerMovement.LastMoveDirection,
-            EnemyLayer = enemyLayer
+            EnemyLayer = enemyLayer,
+            Modifiers = modifiers
         };
     }
     
@@ -106,4 +140,5 @@ public class PlayerSkillController : MonoBehaviour
 
         return false;
     }
+
 }
