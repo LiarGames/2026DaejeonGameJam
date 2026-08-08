@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _movementInput;
 
     public Vector2 LastMoveDirection { get; private set; } = Vector2.down;
+    public Collider2D MovementBounds => _movementBounds;
 
     private void Awake()
     {
