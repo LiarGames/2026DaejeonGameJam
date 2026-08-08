@@ -31,4 +31,12 @@ public class EnemyStats : MonoBehaviour
         AttackCooldown = data.startingAttackCooldown;
         ExperienceReward = data.experienceReward;
     }
+
+    // 스포너가 스폰 직후(EnemyHealth.Start 이전) 호출해 웨이브 난이도 배율을 적용한다.
+    public void ApplyScaling(float healthMultiplier, float speedMultiplier, float damageMultiplier)
+    {
+        MaxHealth *= healthMultiplier;
+        MoveSpeed *= speedMultiplier;
+        Attack *= damageMultiplier;
+    }
 }

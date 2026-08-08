@@ -43,21 +43,6 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        if (enemyself == null)
-            enemyself = GetComponent<Rigidbody2D>();
-    }
-
-    // 스포너가 스폰 직후 호출: 플레이어 연결 + 난이도 배율 적용.
-    public void Initialize(Rigidbody2D target, float speedMultiplier, float damageMultiplier)
-    {
-        player = target;
-        moveSpeed *= speedMultiplier;
-        meleeDamage *= damageMultiplier;
-        projectileSpeed *= speedMultiplier;
-    }
-
     private void FixedUpdate()
     {
         if (isAttacking)

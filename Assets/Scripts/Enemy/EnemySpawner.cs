@@ -16,7 +16,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float intervalDecayPerMin = 1f;  // 분당 간격 감소량
 
     [Header("Difficulty Scaling (분 단위)")]
-    [SerializeField] private float speedScalePerMin = 0.1f;   // 분당 이동/투사체 속도 +10%
+    [SerializeField] private float healthScalePerMin = 0.15f; // 분당 체력 +15%
+    [SerializeField] private float speedScalePerMin = 0.1f;   // 분당 이동 속도 +10%
     [SerializeField] private float damageScalePerMin = 0.15f; // 분당 공격력 +15%
 
     private float elapsed;
@@ -54,9 +55,16 @@ public class EnemySpawner : MonoBehaviour
 
         EnemyMovement enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
 
-        float minutes = elapsed / 60f;
-        float speedMul = 1f + speedScalePerMin * minutes;
-        float damageMul = 1f + damageScalePerMin * minutes;
-        enemy.Initialize(player, speedMul, damageMul);
+        // 스폰 직후 스탯에 웨이브 배율 적용 (EnemyHealth.Start의 체력 초기화 이전).
+        EnemyStats stats = enemy.GetComponent<EnemyStats>();
+        if (stats != null)
+        {
+            float minutes = elapsed / 60f;
+            stats.ApplyScaling(
+                1f + healthScalePerMin * minutes,
+                1f + speedScalePerMin * minutes,
+                1f + damageScalePerMin * minutes
+            );
+        }
     }
 }
