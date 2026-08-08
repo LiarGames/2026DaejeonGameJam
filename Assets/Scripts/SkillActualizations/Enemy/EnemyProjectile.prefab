@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5475931715104598585}
   - component: {fileID: 2941924969575219462}
-  m_Layer: 0
-  m_Name: ProjectilePayload
+  m_Layer: 9
+  m_Name: EnemyProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2679659190974894721, guid: c7acd079a180ad54b9757719c4f9ed5c, type: 3}
+  m_Sprite: {fileID: -2164647533427649213, guid: b07094b5d57b8904b983c4b9d5e0112b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

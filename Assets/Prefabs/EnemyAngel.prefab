@@ -295,7 +295,7 @@ MonoBehaviour:
   defaultFacesLeft: 1
   preferredRange: 5
   rangeTolerance: 0.25
-  attackSkill: {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
+  attackSkill: {fileID: 11400000, guid: 1cac3683eab02044d86cddb5492001c6, type: 2}
   skillOrigin: {fileID: 6609962408818152693}
   targetLayer:
     serializedVersion: 2

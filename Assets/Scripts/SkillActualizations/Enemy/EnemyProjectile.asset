@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 847562ea32b7b4a469355c7ef9395102, type: 3}
-  m_Name: PlayerProjectilePayload
+  m_Name: EnemyProjectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileSkill
-  vfxPrefab: {fileID: 3844118754778442563, guid: 3c0dc738fc4fb58409ddf64ed2ce379d, type: 3}
+  vfxPrefab: {fileID: 3844118754778442563, guid: c0083e8d73a72a14da1d64ae5abbfb19, type: 3}
   vfxLifetime: 3
   damageMultiplier: 1
   processDuration: 0
