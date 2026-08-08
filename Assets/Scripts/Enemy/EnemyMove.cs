@@ -1,4 +1,5 @@
 using System.Collections;
+using Spine.Unity;
 using UnityEngine;
 
 public enum EnemyMovementType
@@ -15,6 +16,11 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private EnemyMovementType movementType;
+
+    [Header("Facing")]
+    [SerializeField] private SkeletonAnimation skeletonAnimation;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private bool defaultFacesLeft = true;
 
     [Header("Ranged Movement")]
     [SerializeField] private float preferredRange = 5f;
@@ -36,6 +42,12 @@ public class EnemyMovement : MonoBehaviour
 
         if (enemyself == null)
             enemyself = GetComponent<Rigidbody2D>();
+
+        if (skeletonAnimation == null)
+            skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Start()
@@ -74,14 +86,16 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Vector2 difference =
+            player.position - enemyself.position;
+
+        UpdateFacing(difference);
+
         if (isAttacking)
         {
             StopMovement();
             return;
         }
-
-        Vector2 difference =
-            player.position - enemyself.position;
 
         float squaredDistance =
             difference.sqrMagnitude;
@@ -242,6 +256,30 @@ public class EnemyMovement : MonoBehaviour
     {
         enemyself.linearVelocity =
             Vector2.zero;
+    }
+
+    private void UpdateFacing(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) <= 0.01f)
+            return;
+
+        bool facesLeft = direction.x < 0f;
+        bool shouldFlip = facesLeft != defaultFacesLeft;
+
+        if (skeletonAnimation != null &&
+            skeletonAnimation.Skeleton != null)
+        {
+            float magnitude = Mathf.Abs(
+                skeletonAnimation.Skeleton.ScaleX
+            );
+
+            skeletonAnimation.Skeleton.ScaleX =
+                shouldFlip ? -magnitude : magnitude;
+        }
+        else if (spriteRenderer != null)
+        {
+            spriteRenderer.flipX = shouldFlip;
+        }
     }
 
     private bool IsInsideMovementBounds()

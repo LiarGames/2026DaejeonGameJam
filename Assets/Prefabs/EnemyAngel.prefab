@@ -106,6 +106,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyVisualBob
   amplitude: 0.1
   frequency: 3
+--- !u!1 &3511683238538557835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6609962408818152693}
+  m_Layer: 7
+  m_Name: SkillOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6609962408818152693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3511683238538557835}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.65, y: -0.37, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8058048308883926217}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7347026216957143015
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +172,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5316893675338123101}
+  - {fileID: 6609962408818152693}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6436756529074900210
@@ -258,9 +290,13 @@ MonoBehaviour:
   player: {fileID: 0}
   enemyself: {fileID: 6436756529074900210}
   movementType: 1
+  skeletonAnimation: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  defaultFacesLeft: 1
   preferredRange: 5
   rangeTolerance: 0.25
   attackSkill: {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
+  skillOrigin: {fileID: 6609962408818152693}
   targetLayer:
     serializedVersion: 2
     m_Bits: 64

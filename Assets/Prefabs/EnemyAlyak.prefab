@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &48684534315820328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7656693369290894449}
+  m_Layer: 7
+  m_Name: SkillOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7656693369290894449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48684534315820328}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.75, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8058048308883926217}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7347026216957143015
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,6 +66,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1984175471623756539}
+  - {fileID: 7656693369290894449}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6436756529074900210
@@ -152,9 +184,13 @@ MonoBehaviour:
   player: {fileID: 0}
   enemyself: {fileID: 6436756529074900210}
   movementType: 0
+  skeletonAnimation: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  defaultFacesLeft: 1
   preferredRange: 2
   rangeTolerance: 0.25
-  attackSkill: {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
+  attackSkill: {fileID: 11400000, guid: 355fc69945907db4a8eb13eb442ab630, type: 2}
+  skillOrigin: {fileID: 7656693369290894449}
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
