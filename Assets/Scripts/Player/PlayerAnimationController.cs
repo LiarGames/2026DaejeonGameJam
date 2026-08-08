@@ -41,6 +41,7 @@ public class PlayerAnimationController : MonoBehaviour
                 break;
 
             case PlayerState.Attacking:
+            case PlayerState.Dashing:
                 skeletonAnimation.AnimationState.SetAnimation(
                     0,
                     "공격",

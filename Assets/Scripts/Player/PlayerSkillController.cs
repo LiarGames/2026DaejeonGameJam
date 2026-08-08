@@ -95,6 +95,9 @@ public class PlayerSkillController : MonoBehaviour
 
         yield return new WaitForSeconds(effectiveRecoveryDuration);
 
+        while (_stateController.CurrentState == PlayerState.Dashing)
+            yield return null;
+
         if (_stateController.CurrentState == PlayerState.Attacking)
             _stateController.ChangeState(PlayerState.Idle);
     }

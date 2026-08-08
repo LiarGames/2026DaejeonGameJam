@@ -24,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
+        if (_stateController.CurrentState == PlayerState.Dashing)
+            return;
+
         if (!_stateController.CanMove())
         {
             StopMovement();
