@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     [SerializeField] private EnemyStatsData data;
+    [SerializeField] private ExperienceGem experienceGemPrefab;
 
     public float Attack { get; private set; }
     public float Defense { get; private set; }
@@ -51,7 +52,23 @@ public class EnemyStats : MonoBehaviour
 
     private void Die()
     {
-        // TODO: Add death animation, rewards, and object cleanup.
         Debug.Log($"{name} died", this);
+
+        if (experienceGemPrefab != null)
+        {
+            ExperienceGem gem = Instantiate(
+                experienceGemPrefab,
+                transform.position,
+                Quaternion.identity
+            );
+
+            gem.Initialize(data.experienceReward);
+        }
+        else
+        {
+            Debug.LogWarning($"ExperienceGem prefab is not assigned to {name}.", this);
+        }
+
+        Destroy(gameObject);
     }
 }

@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   data: {fileID: 11400000, guid: 8fa9308ea5774078b1d1cd9f46f67667, type: 2}
+  experienceGemPrefab: {fileID: 4280000000000000004, guid: 3dc9db370b4a40cabd0569f681325f29, type: 3}
 --- !u!114 &3560255735996239358
 MonoBehaviour:
   m_ObjectHideFlags: 0
