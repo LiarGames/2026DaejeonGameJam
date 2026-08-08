@@ -1595,6 +1595,38 @@ PrefabInstance:
       propertyPath: skillController
       value: 
       objectReference: {fileID: 1335333314}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: cardPool.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: 'cardPool.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8136965284475565859, guid: 06b843c44d19a714d9fc9eaf46beb87e, type: 3}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: 'cardPool.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8136965284475565859, guid: ccf9a65e719766f48a0852235edaf20b, type: 3}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: 'cardPool.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8136965284475565859, guid: ba737d257816a7b4688b914916a9937c, type: 3}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: 'cardPool.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8136965284475565859, guid: 09ee997cbf0b6c148b12fbd00aa02d43, type: 3}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: 'cardPool.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8136965284475565859, guid: 030d6db413b43e54c9f625d3cd7d2db1, type: 3}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: 'cardPool.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8136965284475565859, guid: 9dfc3e3511007f04d90144add907d170, type: 3}
+    - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
+      propertyPath: 'cardPool.Array.data[7]'
+      value: 
+      objectReference: {fileID: 8136965284475565859, guid: ab3974d446f8f7247a49ba0ceff5b228, type: 3}
     - target: {fileID: 3371245782736742559, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
