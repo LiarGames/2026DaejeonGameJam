@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum StatType
@@ -30,6 +31,9 @@ public class PlayerStats : MonoBehaviour, IDamageable
     public int Level { get; private set; } = 1;
     public float CurrentExperience { get; private set; }
     public float ExperienceToLevelUp { get; private set; } = 100f;
+
+    // 레벨업 시 발생. LevelUpController가 구독해 카드 선택을 띄운다.
+    public event Action OnLevelUp;
 
     private void Awake()
     {   
@@ -74,11 +78,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
         Level++;
         ExperienceToLevelUp += 20f;
 
-        Debug.Log($"Player leveled up to level {Level}");
-
-        // UpgradeStat(StatType.Attack);
-        // UpgradeStat(StatType.MaxHealth);
-        // UpgradeStat(StatType.MaxMana);
+        OnLevelUp?.Invoke();
     }
 
     public void TakeDamage(float amount)
