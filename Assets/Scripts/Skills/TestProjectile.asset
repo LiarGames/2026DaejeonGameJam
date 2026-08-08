@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847562ea32b7b4a469355c7ef9395102, type: 3}
   m_Name: TestProjectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileSkill
+  vfxPrefab: {fileID: 0}
+  vfxLifetime: 0.5
   damageMultiplier: 1
   processDuration: 0.1
   recoveryDuration: 0.1
+  sfxClip: {fileID: 0}
+  sfxVolume: 1
+  castOffset: {x: 0, y: 0}
   projectilePrefab: {fileID: 5740732965750497648, guid: 947c5fd2b239fd64ca1a39cfedd20664, type: 3}
   projectileSpeed: 10
+  baseProjectileCount: 1
+  projectileSpreadAngle: 15

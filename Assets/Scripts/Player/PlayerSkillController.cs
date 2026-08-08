@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerStateController))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerSkillController : MonoBehaviour
 {
     [SerializeField] private PlayerStats _playerStats;
@@ -11,6 +12,7 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private PlayerStateController _stateController;
     [SerializeField] private Transform _skillOrigin;
+    [SerializeField] private AudioSource _skillAudioSource;
     [SerializeField] private LayerMask enemyLayer;
     
     [SerializeField] private float _turnInterval = 1f;
@@ -28,6 +30,15 @@ public class PlayerSkillController : MonoBehaviour
 
         if (_skillOrigin == null)
             _skillOrigin = transform.Find("SkillOrigin");
+
+        if (_skillAudioSource == null)
+            _skillAudioSource = GetComponent<AudioSource>();
+
+        if (_skillAudioSource == null)
+            _skillAudioSource = gameObject.AddComponent<AudioSource>();
+
+        _skillAudioSource.playOnAwake = false;
+        _skillAudioSource.spatialBlend = 0f;
     }
 
     private void Update()
@@ -116,6 +127,7 @@ public class PlayerSkillController : MonoBehaviour
 
         yield return new WaitForSeconds(effectiveProcessDuration);
 
+        skill.PlaySFX(_skillAudioSource);
         skill.Activate(CreateSkillContext(modifiers));
         _pendingModifiers = SkillModifiers.Default;
 
