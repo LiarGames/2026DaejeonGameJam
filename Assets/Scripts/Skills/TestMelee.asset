@@ -15,7 +15,7 @@ MonoBehaviour:
   damageMultiplier: 1
   processDuration: 0.3
   recoveryDuration: 0.1
-  radius: 5
-  angle: 216
+  radius: 2
+  angle: 90
   vfxPrefab: {fileID: 1974060473007221986, guid: ad3144512e1d74041a76b9f186c3ddf4, type: 3}
   vfxLifetime: 0.15

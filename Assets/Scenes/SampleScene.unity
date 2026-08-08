@@ -741,12 +741,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillController
   _playerStats: {fileID: 1335333318}
   _equippedSkills:
-  - {fileID: 11400000, guid: 92e3d17c62c615f4daf76d3026868002, type: 2}
+  - {fileID: 11400000, guid: 38743691d8008a647be86db337cc1e0e, type: 2}
   - {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
-  - {fileID: 11400000, guid: 04188722fc851fd4e9702baa13b2ad21, type: 2}
+  - {fileID: 11400000, guid: 38743691d8008a647be86db337cc1e0e, type: 2}
   - {fileID: 11400000, guid: 1b9125564cfb15e4e81af93d2afaf71d, type: 2}
-  - {fileID: 11400000, guid: 242d66944ee6b3842b9b481727f498c9, type: 2}
-  - {fileID: 11400000, guid: 310a2cab4d20d4142af691f5b46efe94, type: 2}
+  - {fileID: 11400000, guid: 38743691d8008a647be86db337cc1e0e, type: 2}
+  - {fileID: 11400000, guid: 04188722fc851fd4e9702baa13b2ad21, type: 2}
   - {fileID: 11400000, guid: 310a2cab4d20d4142af691f5b46efe94, type: 2}
   - {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
   _playerMovement: {fileID: 1335333315}

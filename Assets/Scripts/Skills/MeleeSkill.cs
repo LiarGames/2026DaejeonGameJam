@@ -23,7 +23,7 @@ public class MeleeSkill : AttackSkill
         DrawDebugSector(
             origin,
             context.Direction,
-            radius,
+            radius * context.Modifiers.RangeMultiplier,
             angle
         );
     }
@@ -53,10 +53,12 @@ public class MeleeSkill : AttackSkill
     }
 
     private void PerformAttack(SkillContext context)
-    {
+    {   
+        float effectiveRadius = radius * context.Modifiers.RangeMultiplier;
+
         Collider2D[] targets = Physics2D.OverlapCircleAll(
             context.Caster.transform.position,
-            radius,
+            effectiveRadius,
             context.EnemyLayer
         );
 

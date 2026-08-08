@@ -33,8 +33,10 @@ public class AoESkill : AttackSkill
             Quaternion.identity
         );
 
+        float effectiveLength = radius * context.Modifiers.RangeMultiplier;
+
         zone.Initialize(
-            radius,
+            effectiveLength,
             duration,
             tickInterval,
             damagePerTick,
@@ -44,20 +46,22 @@ public class AoESkill : AttackSkill
 
         DrawDebugShape(
             context.Caster.transform.position,
-            spawnPosition
+            spawnPosition,
+            context.Modifiers
         );
     }
 
     private void DrawDebugShape(
         Vector2 origin,
         Vector2 center,
+        SkillModifiers modifiers,
         float debugDuration = 0.2f)
     {
         const int segments = 32;
 
         Debug.DrawLine(origin, center, Color.cyan, debugDuration);
 
-        Vector2 previousPoint = center + Vector2.right * radius;
+        Vector2 previousPoint = center + Vector2.right * radius * modifiers.RangeMultiplier;
 
         for (int i = 1; i <= segments; i++)
         {
@@ -65,7 +69,7 @@ public class AoESkill : AttackSkill
             Vector2 point = center + new Vector2(
                 Mathf.Cos(angle),
                 Mathf.Sin(angle)
-            ) * radius;
+            ) * radius * modifiers.RangeMultiplier;
 
             Debug.DrawLine(
                 previousPoint,
