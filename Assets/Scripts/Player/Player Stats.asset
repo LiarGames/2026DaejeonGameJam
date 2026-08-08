@@ -18,7 +18,7 @@ MonoBehaviour:
   startingDefense: 10
   startingHealthRegen: 1
   startingManaRegen: 10
-  startingMoveSpeed: 5
+  startingMoveSpeed: 4
   healthUpgrade: 100
   attackUpgrade: 20
   manaUpgrade: 50

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerStateController))]
@@ -6,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerStats _playerStats;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private PlayerStateController _stateController;
+    [SerializeField] private Collider2D _collider;
+    [SerializeField] private Collider2D _movementBounds;
 
     private Vector2 _movementInput;
 
@@ -20,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        ClampToBounds();
     }
 
     private void Move()
@@ -45,6 +49,28 @@ public class PlayerMovement : MonoBehaviour
 
         StopMovement();
         _stateController.ChangeState(PlayerState.Idle);
+    }
+
+   private void ClampToBounds()
+    {
+        Bounds bounds = _movementBounds.bounds;
+        Vector2 halfSize = _collider.bounds.extents;
+
+        Vector2 position = _rb.position;
+
+        position.x = Mathf.Clamp(
+            position.x,
+            bounds.min.x + halfSize.x,
+            bounds.max.x - halfSize.x
+        );
+
+        position.y = Mathf.Clamp(
+            position.y,
+            bounds.min.y + halfSize.y,
+            bounds.max.y - halfSize.y
+        );
+
+        _rb.position = position;
     }
 
     public void SetMovementInput(Vector2 input)
