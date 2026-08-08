@@ -24,6 +24,9 @@ public class PlayerStats : MonoBehaviour, IDamageable
     [SerializeField] private float damageSfxVolume = 1f;
     [SerializeField] private AudioSource audioSource;
 
+    [Header("Damage Visual")]
+    [SerializeField] private PlayerAnimationController animationController;
+
     public float Attack { get; private set; }
     public float Defense { get; private set; }
     public float MaxHealth { get; private set; }
@@ -44,6 +47,9 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        if (animationController == null)
+            animationController = GetComponent<PlayerAnimationController>();
+
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
@@ -105,6 +111,9 @@ public class PlayerStats : MonoBehaviour, IDamageable
             return;
 
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0f);
+
+        if (animationController != null)
+            animationController.PlayDamageFlash();
 
         if (damageSfxClip != null)
         {
