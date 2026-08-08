@@ -104,9 +104,9 @@ public class PlayerSkillController : MonoBehaviour
         return new SkillContext
         {
             Caster = gameObject,
-            Stats = _playerStats,
+            AttackPower = _playerStats.Attack,
             Direction = _playerMovement.LastMoveDirection,
-            EnemyLayer = enemyLayer,
+            TargetLayer = enemyLayer,
             Modifiers = modifiers
         };
     }

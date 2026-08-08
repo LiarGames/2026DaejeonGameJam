@@ -21,7 +21,7 @@ public class TaperedMeleeSkill : AttackSkill
         Collider2D[] targets = Physics2D.OverlapCircleAll(
             origin,
             effectiveLength,
-            context.EnemyLayer
+            context.TargetLayer
         );
 
         foreach (Collider2D target in targets)
@@ -48,10 +48,10 @@ public class TaperedMeleeSkill : AttackSkill
 
     private void HitTarget(SkillContext context, Collider2D target)
     {
-        float damage = context.Stats.Attack * damageMultiplier;
+        float damage = context.AttackPower * damageMultiplier;
 
         SkillHitProcessor.ApplyHit(
-            target.GetComponentInParent<EnemyHealth>(),
+            target,
             damage,
             context.Caster.transform.position,
             context.Modifiers

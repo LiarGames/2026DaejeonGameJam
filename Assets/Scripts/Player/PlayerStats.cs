@@ -12,7 +12,7 @@ public enum StatType
 }
 
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, IDamageable
 {
     [SerializeField] private PlayerStatsData data;
 

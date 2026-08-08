@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(EnemyStats))]
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour, IDamageable, IKnockbackable
 {
     [SerializeField] private Rigidbody2D _rb;
 

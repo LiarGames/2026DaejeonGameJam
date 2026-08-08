@@ -25,7 +25,7 @@ public class AoESkill : AttackSkill
             context.Direction.normalized * castDistance;
 
         float damagePerTick =
-            context.Stats.Attack * damageMultiplier;
+            context.AttackPower * damageMultiplier;
 
         AoEZone zone = Instantiate(
             zonePrefab,
@@ -40,7 +40,7 @@ public class AoESkill : AttackSkill
             duration,
             tickInterval,
             damagePerTick,
-            context.EnemyLayer,
+            context.TargetLayer,
             context.Modifiers
         );
 

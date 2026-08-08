@@ -3,19 +3,25 @@ using UnityEngine;
 public static class SkillHitProcessor
 {
     public static void ApplyHit(
-        EnemyHealth enemy,
+        Collider2D target,
         float damage,
         Vector2 hitOrigin,
         SkillModifiers modifiers)
     {
-        if (enemy == null)
+        IDamageable damageable =
+            target.GetComponentInParent<IDamageable>();
+
+        if (damageable == null)
             return;
 
-        enemy.TakeDamage(damage);
+        damageable.TakeDamage(damage);
 
         if (modifiers.KnockbackDistance > 0f)
         {
-            enemy.ApplyKnockback(
+            IKnockbackable knockbackable =
+                target.GetComponentInParent<IKnockbackable>();
+
+            knockbackable?.ApplyKnockback(
                 hitOrigin,
                 modifiers.KnockbackDistance
             );

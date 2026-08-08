@@ -59,7 +59,7 @@ public class MeleeSkill : AttackSkill
         Collider2D[] targets = Physics2D.OverlapCircleAll(
             context.Caster.transform.position,
             effectiveRadius,
-            context.EnemyLayer
+            context.TargetLayer
         );
 
         foreach (Collider2D target in targets)
@@ -80,10 +80,10 @@ public class MeleeSkill : AttackSkill
 
     private void HitTarget(SkillContext context, Collider2D target)
     {
-        float damage = context.Stats.Attack * damageMultiplier;
+        float damage = context.AttackPower * damageMultiplier;
 
         SkillHitProcessor.ApplyHit(
-            target.GetComponentInParent<EnemyHealth>(),
+            target,
             damage,
             context.Caster.transform.position,
             context.Modifiers
