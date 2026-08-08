@@ -6,6 +6,11 @@ public abstract class AttackSkill : Skill
     [SerializeField] private float processDuration;
     [SerializeField] private float recoveryDuration;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip sfxClip;
+    [Range(0f, 1f)]
+    [SerializeField] private float sfxVolume = 1f;
+
     [Header("Cast Origin")]
     [Tooltip("X moves forward/backward and Y moves sideways relative to the cast direction.")]
     [SerializeField] private Vector2 castOffset;
@@ -14,6 +19,14 @@ public abstract class AttackSkill : Skill
     public float RecoveryDuration => recoveryDuration;
 
     public abstract void Activate(SkillContext context);
+
+    public void PlaySFX(AudioSource audioSource)
+    {
+        if (audioSource == null || sfxClip == null)
+            return;
+
+        audioSource.PlayOneShot(sfxClip, sfxVolume);
+    }
 
     protected Vector2 GetCastPosition(SkillContext context)
     {

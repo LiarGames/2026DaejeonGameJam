@@ -15,8 +15,8 @@ MonoBehaviour:
   vfxPrefab: {fileID: 3844118754778442563, guid: 86cb07c5d553bc7498df8dece8aa0b0e, type: 3}
   vfxLifetime: 0.5
   damageMultiplier: 1
-  processDuration: 0
-  recoveryDuration: 0
+  processDuration: 0.3
+  recoveryDuration: 0.2
   castOffset: {x: 0, y: 0}
   radius: 1
   angle: 45

@@ -17,5 +17,8 @@ MonoBehaviour:
   damageMultiplier: 1
   processDuration: 0.3
   recoveryDuration: 0.1
+  sfxClip: {fileID: 0}
+  sfxVolume: 1
+  castOffset: {x: 0, y: 0}
   radius: 2
   angle: 90

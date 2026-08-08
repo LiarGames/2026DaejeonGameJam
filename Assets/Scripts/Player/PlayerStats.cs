@@ -13,9 +13,19 @@ public enum StatType
 }
 
 
+[RequireComponent(typeof(AudioSource))]
 public class PlayerStats : MonoBehaviour, IDamageable
 {
     [SerializeField] private PlayerStatsData data;
+
+    [Header("Damage Audio")]
+    [SerializeField] private AudioClip damageSfxClip;
+    [Range(0f, 1f)]
+    [SerializeField] private float damageSfxVolume = 1f;
+    [SerializeField] private AudioSource audioSource;
+
+    [Header("Damage Visual")]
+    [SerializeField] private PlayerAnimationController animationController;
 
     public float Attack { get; private set; }
     public float Defense { get; private set; }
@@ -36,7 +46,19 @@ public class PlayerStats : MonoBehaviour, IDamageable
     public event Action OnLevelUp;
 
     private void Awake()
-    {   
+    {
+        if (animationController == null)
+            animationController = GetComponent<PlayerAnimationController>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0f;
+
         Attack = data.startingAttack;
         Defense = data.startingDefense;
         MaxHealth = data.startingMaxHealth;
@@ -84,7 +106,26 @@ public class PlayerStats : MonoBehaviour, IDamageable
     public void TakeDamage(float amount)
     {
         float damage = Mathf.Max(amount - Defense, 0f);
+
+        if (damage <= 0f || CurrentHealth <= 0f)
+            return;
+
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0f);
+
+        if (animationController != null)
+            animationController.PlayDamageFlash();
+
+        if (damageSfxClip != null)
+        {
+            audioSource.PlayOneShot(damageSfxClip, damageSfxVolume);
+        }
+        else
+        {
+            Debug.LogWarning(
+                "PlayerStats의 Damage Sfx Clip이 지정되지 않았습니다.",
+                this
+            );
+        }
 
         if (CurrentHealth <= 0f)
             Die();
