@@ -1095,9 +1095,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillController
   _playerStats: {fileID: 1335333318}
   _equippedSkills:
-  - {fileID: 11400000, guid: 1bb0b3e943ee2fc4fba502c0586835c6, type: 2}
-  - {fileID: 11400000, guid: 1b9125564cfb15e4e81af93d2afaf71d, type: 2}
-  - {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
+  - {fileID: 11400000, guid: ab529d7f1c9f5d84cb09b2367017ec2a, type: 2}
+  - {fileID: 11400000, guid: a00898bbdf835784982accd8b74b9682, type: 2}
   _playerMovement: {fileID: 1335333315}
   _stateController: {fileID: 1335333319}
   enemyLayer:

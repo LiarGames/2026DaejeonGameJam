@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb080567b4540b045b9cb8f847a0b2bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Card
-  skill: {fileID: 11400000, guid: b5f6496a71130cf488b26e81356fdb1f, type: 2}
+  skill: {fileID: 11400000, guid: a00898bbdf835784982accd8b74b9682, type: 2}
   highlight: {fileID: 4831296421908399684}
   outlineColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   outlineSize: 6
