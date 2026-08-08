@@ -16,6 +16,6 @@ MonoBehaviour:
   startingAttack: 20
   startingDefense: 0
   startingMoveSpeed: 2
-  startingAttackRange: 5
+  startingAttackRange: 10
   startingAttackCooldown: 1.5
   experienceReward: 20

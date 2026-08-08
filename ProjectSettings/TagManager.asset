@@ -41,5 +41,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1355899159
+    locked: 0
+  - name: Interactables
+    uniqueID: 3532947823
+    locked: 0
+  - name: UI
+    uniqueID: 2686020305
+    locked: 0
   m_RenderingLayers:
   - Default
