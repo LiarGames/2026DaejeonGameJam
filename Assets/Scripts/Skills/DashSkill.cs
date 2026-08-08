@@ -35,7 +35,7 @@ public class DashSkill : AttackSkill
         );
 
         SpawnVFX(
-            context.Caster.transform.position,
+            GetCastPosition(context),
             context.Direction,
             context.Caster.transform
         );

@@ -27,7 +27,7 @@ public class ProjectileSkill : AttackSkill
         int projectileIndex,
         int projectileCount)
     {
-        Vector2 playerPosition = context.Caster.transform.position;
+        Vector2 spawnPosition = GetCastPosition(context);
         float centerOffset = (projectileCount - 1) * 0.5f;
         float angleOffset =
             (projectileIndex - centerOffset) * projectileSpreadAngle;
@@ -37,7 +37,7 @@ public class ProjectileSkill : AttackSkill
 
         GameObject projectile = Instantiate(
             projectilePrefab,
-            playerPosition,
+            spawnPosition,
             Quaternion.identity
         );
 
@@ -63,7 +63,7 @@ public class ProjectileSkill : AttackSkill
         );
 
         SpawnVFX(
-            playerPosition,
+            spawnPosition,
             direction,
             projectile.transform
         );

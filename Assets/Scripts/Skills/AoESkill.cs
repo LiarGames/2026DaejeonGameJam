@@ -20,8 +20,9 @@ public class AoESkill : AttackSkill
             return;
         }
 
+        Vector2 castOrigin = GetCastPosition(context);
         Vector2 spawnPosition =
-            (Vector2)context.Caster.transform.position +
+            castOrigin +
             context.Direction.normalized * castDistance;
 
         float damagePerTick =
@@ -65,7 +66,7 @@ public class AoESkill : AttackSkill
         );
 
         DrawDebugShape(
-            context.Caster.transform.position,
+            castOrigin,
             spawnPosition,
             context.Modifiers
         );
