@@ -25,8 +25,6 @@ public class Card : MonoBehaviour
     // 배치 중인 프리뷰 카드를 강조할 때 사용.
     public void SetHighlighted(bool on)
     {
-        Debug.Log($"[Card] SetHighlighted({on}) on '{name}' — highlight={(highlight != null ? highlight.name : "null(미연결)")}");
-
         if (highlight != null)
         {
             highlight.SetActive(on);

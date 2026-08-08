@@ -23,6 +23,27 @@ public class EnemySpawner : MonoBehaviour
     private float elapsed;
     private float spawnTimer;
 
+    private void Start()
+    {
+        // 스폰이 조용히 실패하는 경우를 잡기 위한 초기 점검.
+        if (player == null)
+            Debug.LogError("[Spawner] Player(Rigidbody2D)가 연결되지 않아 스폰되지 않습니다.", this);
+
+        if (enemyPrefabs == null || enemyPrefabs.Length == 0)
+        {
+            Debug.LogError("[Spawner] Enemy Prefabs가 비어 있어 스폰되지 않습니다.", this);
+            return;
+        }
+
+        for (int i = 0; i < enemyPrefabs.Length; i++)
+        {
+            if (enemyPrefabs[i] == null)
+                Debug.LogWarning($"[Spawner] Enemy Prefabs[{i}]가 빈 슬롯입니다.", this);
+            else if (enemyPrefabs[i].GetComponent<EnemyStats>() == null)
+                Debug.LogWarning($"[Spawner] '{enemyPrefabs[i].name}'에 EnemyStats가 없어 난이도 스케일링이 적용되지 않습니다.", this);
+        }
+    }
+
     private void Update()
     {
         elapsed += Time.deltaTime;
