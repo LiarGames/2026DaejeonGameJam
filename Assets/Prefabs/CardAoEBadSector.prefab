@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 628020731017694834}
   - component: {fileID: 8136965284475565859}
   m_Layer: 5
-  m_Name: "CardAoE\uBD88\uB7C9\uC139\uD130"
+  m_Name: CardAoEBadSector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
