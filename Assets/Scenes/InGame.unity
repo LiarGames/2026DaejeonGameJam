@@ -1019,7 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: spine-unity::Spine.Unity.SkeletonRenderer
-  skeletonDataAsset: {fileID: 11400000, guid: 49456281386c31744ae8f8b4220bc8b9, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 547b08309e7a4c244955c9ec6af442ff, type: 2}
   initialSkinName: 
   initialFlipX: 1
   initialFlipY: 0
@@ -1080,7 +1080,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d7ad390c607fd7c4a9120b1d100206cc, type: 2}
+  - {fileID: 2100000, guid: 9df9a3f4d6d7c0d418cc3d049a60a4ac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
