@@ -11,6 +11,7 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] private List<Skill> _equippedSkills = new List<Skill>();
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private PlayerStateController _stateController;
+    [SerializeField] private PlayerAnimationController _animationController;
     [SerializeField] private Transform _skillOrigin;
     [SerializeField] private AudioSource _skillAudioSource;
     [SerializeField] private LayerMask enemyLayer;
@@ -39,6 +40,9 @@ public class PlayerSkillController : MonoBehaviour
     {
         if (_stateController == null)
             _stateController = GetComponent<PlayerStateController>();
+
+        if (_animationController == null)
+            _animationController = GetComponent<PlayerAnimationController>();
 
         if (_skillOrigin == null)
             _skillOrigin = transform.Find("SkillOrigin");
@@ -126,11 +130,23 @@ public class PlayerSkillController : MonoBehaviour
         SkillModifiers modifiers = _pendingModifiers;
         float castSpeedMultiplier =
             Mathf.Max(0.01f, modifiers.CastSpeedMultiplier);
-        float effectiveProcessDuration =
+        float castSpeedProcessDuration =
             skill.ProcessDuration / castSpeedMultiplier;
 
-        float effectiveRecoveryDuration =
+        float castSpeedRecoveryDuration =
             skill.RecoveryDuration / castSpeedMultiplier;
+
+        float castSpeedTotalDuration =
+            castSpeedProcessDuration + castSpeedRecoveryDuration;
+        float slotFitScale = castSpeedTotalDuration > SlotDuration &&
+            SlotDuration > 0f
+                ? SlotDuration / castSpeedTotalDuration
+                : 1f;
+
+        float effectiveProcessDuration =
+            castSpeedProcessDuration * slotFitScale;
+        float effectiveRecoveryDuration =
+            castSpeedRecoveryDuration * slotFitScale;
 
         // 회전 동기화용: 이번 시전의 총 길이를 미리 기록한다.
         _attackDuration = effectiveProcessDuration + effectiveRecoveryDuration;
@@ -146,6 +162,9 @@ public class PlayerSkillController : MonoBehaviour
         }
 
         _stateController.ChangeState(PlayerState.Attacking);
+
+        if (_animationController != null)
+            _animationController.RestartAttackAnimation(_attackDuration);
 
         yield return new WaitForSeconds(effectiveProcessDuration);
 

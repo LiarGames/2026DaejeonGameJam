@@ -15,8 +15,10 @@ MonoBehaviour:
   vfxPrefab: {fileID: 3844118754778442563, guid: 3c0dc738fc4fb58409ddf64ed2ce379d, type: 3}
   vfxLifetime: 3
   damageMultiplier: 1
-  processDuration: 0
+  processDuration: 0.6
   recoveryDuration: 0
+  sfxClip: {fileID: 0}
+  sfxVolume: 1
   castOffset: {x: 0, y: 0}
   projectilePrefab: {fileID: 5740732965750497648, guid: 64c0bdbf08f5f9b428f9a1481fd0114e, type: 3}
   projectileSpeed: 10

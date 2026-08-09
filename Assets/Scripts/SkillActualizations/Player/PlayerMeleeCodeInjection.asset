@@ -15,7 +15,10 @@ MonoBehaviour:
   vfxPrefab: {fileID: 3844118754778442563, guid: 1dac12c7625dd5a48a49124398feb2a7, type: 3}
   vfxLifetime: 0.5
   damageMultiplier: 1
-  processDuration: 0
+  processDuration: 0.6
   recoveryDuration: 0
+  sfxClip: {fileID: 0}
+  sfxVolume: 1
+  castOffset: {x: 0, y: 0}
   length: 2
   tipAngle: 15
