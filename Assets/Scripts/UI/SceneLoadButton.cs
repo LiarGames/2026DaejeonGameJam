@@ -15,6 +15,9 @@ public class SceneLoadButton : MonoBehaviour
     // 버튼마다 다른 씬을 넘기고 싶으면 이 쪽(string 인자)을 OnClick에 연결해도 된다.
     public void LoadScene(string targetScene)
     {
+        // 일시정지·게임오버 상태에서 나가도 다음 씬이 멈춰 있지 않도록 원복.
+        Time.timeScale = 1f;
+
         if (SceneTransitionManager.Instance != null)
             SceneTransitionManager.Instance.LoadScene(targetScene);
         else
