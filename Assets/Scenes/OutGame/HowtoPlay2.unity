@@ -3491,7 +3491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialLevelUpTrigger
   playerStats: {fileID: 1335333318}
   triggerOnStart: 1
-  delay: 2
+  delay: 1.5
   onlyOnce: 1
 --- !u!1 &1762261360
 GameObject:
@@ -4449,9 +4449,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5140371458613564640}
-  - {fileID: 7239788137330894002}
   - {fileID: 7951258424784528303}
-  - {fileID: 4946942726351561657}
   - {fileID: 3237288755114934475}
   - {fileID: 8438702926401441247}
   - {fileID: 6398714902154756173}
@@ -4461,6 +4459,8 @@ RectTransform:
   - {fileID: 1205875630}
   - {fileID: 571141820}
   - {fileID: 1127863636}
+  - {fileID: 4946942726351561657}
+  - {fileID: 7239788137330894002}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
