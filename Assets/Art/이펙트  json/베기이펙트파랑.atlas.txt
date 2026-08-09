@@ -1,6 +1,6 @@
 베기이펙트파랑.png
 size:104,94
-filter:Linear,Linear
+filter:Nearest,Nearest
 pma:true
 베기이펙트파랑
 bounds:2,2,100,90
