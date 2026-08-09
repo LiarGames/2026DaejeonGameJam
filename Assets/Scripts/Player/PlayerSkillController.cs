@@ -15,13 +15,25 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] private AudioSource _skillAudioSource;
     [SerializeField] private LayerMask enemyLayer;
     
-    [SerializeField] private float _turnInterval = 1f;
+    [Header("Skill Loop")]
+    [Tooltip("스킬 목록을 한 바퀴 도는 데 걸리는 총 시간(초). 고정값이므로 스킬이 늘수록 각 스킬이 더 자주 발동된다.")]
+    [SerializeField] private float _cycleDuration = 4f;
+
     private int _currentSkillIndex;
     private float _skillTimer;
     private SkillModifiers _pendingModifiers = SkillModifiers.Default;
 
     private float _attackDuration; // 이번 시전의 총 소요(선딜+후딜)
     private float _attackElapsed;  // 시전 경과
+
+    // 스킬 하나에 배정된 시간. 한 바퀴 시간을 스킬 수로 나눈 값.
+    private float SlotDuration =>
+        _cycleDuration / Mathf.Max(1, _equippedSkills.Count);
+
+    // 슬롯 시간에서 시전 시간을 뺀 실제 대기 시간.
+    // 시전이 슬롯보다 길면 0 (그만큼 사이클이 늘어남).
+    private float CurrentInterval =>
+        Mathf.Max(0f, SlotDuration - _attackDuration);
 
     private void Awake()
     {
@@ -57,7 +69,7 @@ public class PlayerSkillController : MonoBehaviour
 
         _skillTimer += Time.deltaTime;
 
-        if (_skillTimer < _turnInterval)
+        if (_skillTimer < CurrentInterval)
             return;
 
         Skill skill = GetCurrentSkill();
@@ -117,10 +129,21 @@ public class PlayerSkillController : MonoBehaviour
         float effectiveProcessDuration =
             skill.ProcessDuration / castSpeedMultiplier;
 
+        float effectiveRecoveryDuration =
+            skill.RecoveryDuration / castSpeedMultiplier;
+
         // 회전 동기화용: 이번 시전의 총 길이를 미리 기록한다.
-        _attackDuration = effectiveProcessDuration
-            + skill.RecoveryDuration / castSpeedMultiplier;
+        _attackDuration = effectiveProcessDuration + effectiveRecoveryDuration;
         _attackElapsed = 0f;
+
+        // 시전 시간이 0이면 상태 전환 없이 즉시 발동한다.
+        // (한 프레임짜리 Attacking 상태 때문에 이동이 끊기는 것을 방지)
+        if (_attackDuration <= 0f)
+        {
+            skill.Activate(CreateSkillContext(modifiers));
+            _pendingModifiers = SkillModifiers.Default;
+            yield break;
+        }
 
         _stateController.ChangeState(PlayerState.Attacking);
 
@@ -129,9 +152,6 @@ public class PlayerSkillController : MonoBehaviour
         skill.PlaySFX(_skillAudioSource);
         skill.Activate(CreateSkillContext(modifiers));
         _pendingModifiers = SkillModifiers.Default;
-
-        float effectiveRecoveryDuration = 
-            skill.RecoveryDuration / castSpeedMultiplier;
 
         yield return new WaitForSeconds(effectiveRecoveryDuration);
 
@@ -249,7 +269,7 @@ public class PlayerSkillController : MonoBehaviour
     {
         get
         {
-            float total = _attackDuration + _turnInterval;
+            float total = _attackDuration + CurrentInterval;
             if (total <= 0f)
                 return 0f;
 
