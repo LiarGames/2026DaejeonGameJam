@@ -13,6 +13,7 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
 
     [Header("Animation Names")]
+    [SerializeField] private string attackAnimationName = "공격";
     [SerializeField] private string deathAnimationName = "죽음";
 
     [Header("Damage Flash")]
@@ -24,6 +25,7 @@ public class PlayerAnimationController : MonoBehaviour
     private Coroutine _damageFlashCoroutine;
     private Color _baseSkeletonColor;
     private bool _hasBaseSkeletonColor;
+    private float _attackPlaybackDuration;
 
     private void Update()
     {
@@ -68,14 +70,48 @@ public class PlayerAnimationController : MonoBehaviour
                 break;
 
             case PlayerState.Attacking:
+                PlayAttackTrack();
+                break;
+
             case PlayerState.Dashing:
                 aliveSkeletonAnimation.AnimationState.SetAnimation(
                     0,
-                    "공격",
+                    attackAnimationName,
                     false
                 );
                 break;
 
+        }
+    }
+
+    public void RestartAttackAnimation(float duration)
+    {
+        _attackPlaybackDuration = Mathf.Max(0f, duration);
+        _lastState = PlayerState.Attacking;
+
+        SetAliveVisualActive();
+        PlayAttackTrack();
+        UpdateFacingDirection();
+    }
+
+    private void PlayAttackTrack()
+    {
+        if (aliveSkeletonAnimation == null)
+            return;
+
+        Spine.TrackEntry attackEntry =
+            aliveSkeletonAnimation.AnimationState.SetAnimation(
+                0,
+                attackAnimationName,
+                false
+            );
+
+        if (_attackPlaybackDuration > 0f &&
+            attackEntry.Animation.Duration > 0f)
+        {
+            attackEntry.TimeScale =
+                attackEntry.Animation.Duration /
+                _attackPlaybackDuration;
         }
     }
 

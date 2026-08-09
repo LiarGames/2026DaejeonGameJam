@@ -1252,6 +1252,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a00898bbdf835784982accd8b74b9682, type: 2}
   _playerMovement: {fileID: 1335333315}
   _stateController: {fileID: 1335333319}
+  _animationController: {fileID: 0}
   _skillOrigin: {fileID: 943753496}
   _skillAudioSource: {fileID: 0}
   enemyLayer:
@@ -1363,6 +1364,7 @@ MonoBehaviour:
   deathSkeletonAnimation: {fileID: 894146950}
   stateController: {fileID: 1335333319}
   playerMovement: {fileID: 1335333315}
+  attackAnimationName: "\uACF5\uACA9"
   deathAnimationName: "\uC8FD\uC74C"
   damageFlashDuration: 0.3
   damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
