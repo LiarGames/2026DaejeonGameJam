@@ -1,6 +1,6 @@
 바이러스.png
 size:450,155
-filter:Linear,Linear
+filter:Nearest,Nearest
 pma:true
 마우스커서
 bounds:297,6,35,65

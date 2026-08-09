@@ -8,6 +8,9 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private PlayerStateController stateController;
     [SerializeField] private PlayerMovement playerMovement;
 
+    [Header("Animation Names")]
+    [SerializeField] private string deathAnimationName = "죽음";
+
     [Header("Damage Flash")]
     [Min(0f)]
     [SerializeField] private float damageFlashDuration = 0.3f;
@@ -57,6 +60,31 @@ public class PlayerAnimationController : MonoBehaviour
                     false
                 );
                 break;
+
+            case PlayerState.Dead:
+                skeletonAnimation.AnimationState.SetAnimation(
+                    0,
+                    deathAnimationName,
+                    false
+                );
+                break;
+        }
+    }
+
+    public float DeathAnimationDuration
+    {
+        get
+        {
+            if (skeletonAnimation == null ||
+                skeletonAnimation.Skeleton == null)
+                return 0f;
+
+            Spine.Animation animation =
+                skeletonAnimation.Skeleton.Data.FindAnimation(
+                    deathAnimationName
+                );
+
+            return animation != null ? animation.Duration : 0f;
         }
     }
 

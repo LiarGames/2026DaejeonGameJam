@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public enum StatType
@@ -26,6 +27,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     [Header("Damage Visual")]
     [SerializeField] private PlayerAnimationController animationController;
+    [SerializeField] private PlayerStateController stateController;
 
     public float Attack { get; private set; }
     public float Defense { get; private set; }
@@ -49,6 +51,9 @@ public class PlayerStats : MonoBehaviour, IDamageable
     {
         if (animationController == null)
             animationController = GetComponent<PlayerAnimationController>();
+
+        if (stateController == null)
+            stateController = GetComponent<PlayerStateController>();
 
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
@@ -133,6 +138,23 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        if (stateController != null)
+            stateController.ChangeState(PlayerState.Dead);
+
+        StartCoroutine(FinishDeath());
+    }
+
+    private IEnumerator FinishDeath()
+    {
+        yield return null;
+
+        float animationDuration = animationController != null
+            ? animationController.DeathAnimationDuration
+            : 0f;
+
+        if (animationDuration > 0f)
+            yield return new WaitForSeconds(animationDuration);
+
         if (GameManager.Instance != null)
             GameManager.Instance.GameOver();
     }
