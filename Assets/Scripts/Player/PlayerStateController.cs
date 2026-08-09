@@ -22,7 +22,8 @@ public class PlayerStateController : MonoBehaviour
     public bool CanMove()
     {
         return CurrentState == PlayerState.Idle ||
-               CurrentState == PlayerState.Moving;
+               CurrentState == PlayerState.Moving ||
+               CurrentState == PlayerState.Attacking;
     }
 
     public bool CanAttack()

@@ -1,10 +1,14 @@
 using System.Collections;
 using Spine.Unity;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerAnimationController : MonoBehaviour
 {
-    [SerializeField] private SkeletonAnimation skeletonAnimation;
+    [Header("Visuals")]
+    [FormerlySerializedAs("skeletonAnimation")]
+    [SerializeField] private SkeletonAnimation aliveSkeletonAnimation;
+    [SerializeField] private SkeletonAnimation deathSkeletonAnimation;
     [SerializeField] private PlayerStateController stateController;
     [SerializeField] private PlayerMovement playerMovement;
 
@@ -16,7 +20,7 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private float damageFlashDuration = 0.3f;
     [SerializeField] private Color damageFlashColor = Color.red;
 
-    private PlayerState _lastState;
+    private PlayerState _lastState = (PlayerState)(-1);
     private Coroutine _damageFlashCoroutine;
     private Color _baseSkeletonColor;
     private bool _hasBaseSkeletonColor;
@@ -34,10 +38,21 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void PlayStateAnimation(PlayerState state)
     {
+        if (state == PlayerState.Dead)
+        {
+            PlayDeathAnimation();
+            return;
+        }
+
+        SetAliveVisualActive();
+
+        if (aliveSkeletonAnimation == null)
+            return;
+
         switch (state)
         {
             case PlayerState.Idle:
-                skeletonAnimation.AnimationState.SetAnimation(
+                aliveSkeletonAnimation.AnimationState.SetAnimation(
                     0,
                     "animation",
                     true
@@ -45,7 +60,7 @@ public class PlayerAnimationController : MonoBehaviour
                 break;
 
             case PlayerState.Moving:
-                skeletonAnimation.AnimationState.SetAnimation(
+                aliveSkeletonAnimation.AnimationState.SetAnimation(
                     0,
                     "걷기",
                     true
@@ -54,20 +69,61 @@ public class PlayerAnimationController : MonoBehaviour
 
             case PlayerState.Attacking:
             case PlayerState.Dashing:
-                skeletonAnimation.AnimationState.SetAnimation(
+                aliveSkeletonAnimation.AnimationState.SetAnimation(
                     0,
                     "공격",
                     false
                 );
                 break;
 
-            case PlayerState.Dead:
-                skeletonAnimation.AnimationState.SetAnimation(
-                    0,
-                    deathAnimationName,
-                    false
-                );
-                break;
+        }
+    }
+
+    private void PlayDeathAnimation()
+    {
+        RestoreAliveColor();
+
+        if (deathSkeletonAnimation == null)
+            return;
+
+        float facingScale = 1f;
+
+        if (aliveSkeletonAnimation != null &&
+            aliveSkeletonAnimation.Skeleton != null)
+        {
+            facingScale = aliveSkeletonAnimation.Skeleton.ScaleX;
+        }
+
+        deathSkeletonAnimation.gameObject.SetActive(true);
+        deathSkeletonAnimation.Initialize(false);
+
+        if (deathSkeletonAnimation.Skeleton != null)
+            deathSkeletonAnimation.Skeleton.ScaleX = facingScale;
+
+        deathSkeletonAnimation.AnimationState.SetAnimation(
+            0,
+            deathAnimationName,
+            false
+        );
+
+        if (aliveSkeletonAnimation != null &&
+            aliveSkeletonAnimation.gameObject !=
+            deathSkeletonAnimation.gameObject)
+        {
+            aliveSkeletonAnimation.gameObject.SetActive(false);
+        }
+    }
+
+    private void SetAliveVisualActive()
+    {
+        if (aliveSkeletonAnimation != null)
+            aliveSkeletonAnimation.gameObject.SetActive(true);
+
+        if (deathSkeletonAnimation != null &&
+            deathSkeletonAnimation.gameObject !=
+            aliveSkeletonAnimation?.gameObject)
+        {
+            deathSkeletonAnimation.gameObject.SetActive(false);
         }
     }
 
@@ -75,12 +131,16 @@ public class PlayerAnimationController : MonoBehaviour
     {
         get
         {
-            if (skeletonAnimation == null ||
-                skeletonAnimation.Skeleton == null)
+            if (deathSkeletonAnimation == null)
+                return 0f;
+
+            deathSkeletonAnimation.Initialize(false);
+
+            if (deathSkeletonAnimation.Skeleton == null)
                 return 0f;
 
             Spine.Animation animation =
-                skeletonAnimation.Skeleton.Data.FindAnimation(
+                deathSkeletonAnimation.Skeleton.Data.FindAnimation(
                     deathAnimationName
                 );
 
@@ -96,26 +156,32 @@ public class PlayerAnimationController : MonoBehaviour
             return;
         }
 
-        skeletonAnimation.Skeleton.ScaleX = x < 0f ? 1f : -1f;
+        SkeletonAnimation activeSkeleton =
+            _lastState == PlayerState.Dead
+                ? deathSkeletonAnimation
+                : aliveSkeletonAnimation;
+
+        if (activeSkeleton != null && activeSkeleton.Skeleton != null)
+            activeSkeleton.Skeleton.ScaleX = x < 0f ? 1f : -1f;
     }
 
     public void PlayDamageFlash()
     {
-        if (skeletonAnimation == null ||
-            skeletonAnimation.Skeleton == null)
+        if (aliveSkeletonAnimation == null ||
+            aliveSkeletonAnimation.Skeleton == null)
             return;
 
         if (!_hasBaseSkeletonColor)
         {
             _baseSkeletonColor =
-                skeletonAnimation.Skeleton.GetColor();
+                aliveSkeletonAnimation.Skeleton.GetColor();
             _hasBaseSkeletonColor = true;
         }
 
         if (_damageFlashCoroutine != null)
         {
             StopCoroutine(_damageFlashCoroutine);
-            skeletonAnimation.Skeleton.SetColor(_baseSkeletonColor);
+            aliveSkeletonAnimation.Skeleton.SetColor(_baseSkeletonColor);
         }
 
         _damageFlashCoroutine = StartCoroutine(DamageFlashRoutine());
@@ -137,25 +203,33 @@ public class PlayerAnimationController : MonoBehaviour
                 redAmount
             );
 
-            skeletonAnimation.Skeleton.SetColor(color);
+            aliveSkeletonAnimation.Skeleton.SetColor(color);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        skeletonAnimation.Skeleton.SetColor(_baseSkeletonColor);
+        aliveSkeletonAnimation.Skeleton.SetColor(_baseSkeletonColor);
+        _damageFlashCoroutine = null;
+    }
+
+    private void RestoreAliveColor()
+    {
+        if (_damageFlashCoroutine != null)
+            StopCoroutine(_damageFlashCoroutine);
+
+        if (_hasBaseSkeletonColor &&
+            aliveSkeletonAnimation != null &&
+            aliveSkeletonAnimation.Skeleton != null)
+        {
+            aliveSkeletonAnimation.Skeleton.SetColor(_baseSkeletonColor);
+        }
+
         _damageFlashCoroutine = null;
     }
 
     private void OnDisable()
     {
-        if (_hasBaseSkeletonColor &&
-            skeletonAnimation != null &&
-            skeletonAnimation.Skeleton != null)
-        {
-            skeletonAnimation.Skeleton.SetColor(_baseSkeletonColor);
-        }
-
-        _damageFlashCoroutine = null;
+        RestoreAliveColor();
     }
 }

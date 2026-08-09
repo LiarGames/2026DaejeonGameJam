@@ -123,7 +123,6 @@ public class PlayerSkillController : MonoBehaviour
         _attackElapsed = 0f;
 
         _stateController.ChangeState(PlayerState.Attacking);
-        _playerMovement.StopMovement();
 
         yield return new WaitForSeconds(effectiveProcessDuration);
 
@@ -140,7 +139,7 @@ public class PlayerSkillController : MonoBehaviour
             yield return null;
 
         if (_stateController.CurrentState == PlayerState.Attacking)
-            _stateController.ChangeState(PlayerState.Idle);
+            _playerMovement.RestoreLocomotionState();
     }
 
     private SkillContext CreateSkillContext(SkillModifiers modifiers)

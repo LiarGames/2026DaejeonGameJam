@@ -44,12 +44,17 @@ public class PlayerMovement : MonoBehaviour
                 _movementInput.normalized * _playerStats.MoveSpeed;
 
             LastMoveDirection = _movementInput.normalized;
-            _stateController.ChangeState(PlayerState.Moving);
+
+            if (_stateController.CurrentState != PlayerState.Attacking)
+                _stateController.ChangeState(PlayerState.Moving);
+
             return;
         }
 
         StopMovement();
-        _stateController.ChangeState(PlayerState.Idle);
+
+        if (_stateController.CurrentState != PlayerState.Attacking)
+            _stateController.ChangeState(PlayerState.Idle);
     }
 
    private void ClampToBounds()
@@ -87,5 +92,15 @@ public class PlayerMovement : MonoBehaviour
     public void StopMovement()
     {
         _rb.linearVelocity = Vector2.zero;
+    }
+
+    public void RestoreLocomotionState()
+    {
+        PlayerState locomotionState =
+            _movementInput.sqrMagnitude > 0.001f
+                ? PlayerState.Moving
+                : PlayerState.Idle;
+
+        _stateController.ChangeState(locomotionState);
     }
 }
