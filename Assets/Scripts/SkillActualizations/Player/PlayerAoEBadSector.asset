@@ -15,8 +15,10 @@ MonoBehaviour:
   vfxPrefab: {fileID: 3844118754778442563, guid: 887b82be05e4e0c499dc7d10bc1ab836, type: 3}
   vfxLifetime: 3
   damageMultiplier: 1
-  processDuration: 0
+  processDuration: 0.6
   recoveryDuration: 0
+  sfxClip: {fileID: 0}
+  sfxVolume: 1
   castOffset: {x: 0, y: 0}
   castDistance: 3
   radius: 1
