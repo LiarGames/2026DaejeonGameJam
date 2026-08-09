@@ -13,7 +13,7 @@ public struct SkillModifiers
 
     public static SkillModifiers Default => new SkillModifiers
     {
-        KnockbackDistance = 0f,
+        KnockbackDistance = 0.2f,
         ProjectileCountMultiplier = 1f,
         CastSpeedMultiplier = 1f,
         RangeMultiplier = 1f

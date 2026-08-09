@@ -1,5 +1,4 @@
 using System.Collections;
-using Spine.Unity;
 using UnityEngine;
 
 public enum EnemyMovementType
@@ -18,7 +17,6 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private EnemyMovementType movementType;
 
     [Header("Facing")]
-    [SerializeField] private SkeletonAnimation skeletonAnimation;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private bool defaultFacesLeft = true;
 
@@ -34,6 +32,7 @@ public class EnemyMovement : MonoBehaviour
     private EnemyStats stats;
     private Collider2D movementBounds;
     private float fireTimer;
+    private float stunTimer;
     private bool isAttacking;
 
     private void Awake()
@@ -42,9 +41,6 @@ public class EnemyMovement : MonoBehaviour
 
         if (enemyself == null)
             enemyself = GetComponent<Rigidbody2D>();
-
-        if (skeletonAnimation == null)
-            skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
         if (spriteRenderer == null)
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -90,6 +86,13 @@ public class EnemyMovement : MonoBehaviour
             player.position - enemyself.position;
 
         UpdateFacing(difference);
+
+        if (stunTimer > 0f)
+        {
+            stunTimer -= Time.fixedDeltaTime;
+            StopMovement();
+            return;
+        }
 
         if (isAttacking)
         {
@@ -258,6 +261,19 @@ public class EnemyMovement : MonoBehaviour
             Vector2.zero;
     }
 
+    public void Stun(float duration)
+    {
+        stunTimer = Mathf.Max(stunTimer, Mathf.Max(0f, duration));
+
+        if (isAttacking)
+        {
+            StopAllCoroutines();
+            isAttacking = false;
+        }
+
+        StopMovement();
+    }
+
     private void UpdateFacing(Vector2 direction)
     {
         if (Mathf.Abs(direction.x) <= 0.01f)
@@ -266,20 +282,8 @@ public class EnemyMovement : MonoBehaviour
         bool facesLeft = direction.x < 0f;
         bool shouldFlip = facesLeft != defaultFacesLeft;
 
-        if (skeletonAnimation != null &&
-            skeletonAnimation.Skeleton != null)
-        {
-            float magnitude = Mathf.Abs(
-                skeletonAnimation.Skeleton.ScaleX
-            );
-
-            skeletonAnimation.Skeleton.ScaleX =
-                shouldFlip ? -magnitude : magnitude;
-        }
-        else if (spriteRenderer != null)
-        {
+        if (spriteRenderer != null)
             spriteRenderer.flipX = shouldFlip;
-        }
     }
 
     private bool IsInsideMovementBounds()

@@ -275,6 +275,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   _rb: {fileID: 6436756529074900210}
+  hitReactionDuration: 0.4
+  enemyMovement: {fileID: 3560255735996239358}
+  spriteRenderer: {fileID: 7166232593949354303}
 --- !u!114 &3560255735996239358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,8 +293,7 @@ MonoBehaviour:
   player: {fileID: 0}
   enemyself: {fileID: 6436756529074900210}
   movementType: 1
-  skeletonAnimation: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 7166232593949354303}
   defaultFacesLeft: 1
   preferredRange: 5
   rangeTolerance: 0.25
