@@ -86,9 +86,13 @@ public class PlayerStats : MonoBehaviour, IDamageable
         RegenerateMana(); 
     }
 
+    // 튜토리얼 씬처럼 실제 적용을 막아야 할 때 끈다.
+    public bool Invulnerable { get; set; }
+    public bool ExperienceEnabled { get; set; } = true;
+
     public void GainExperience(float amount)
     {
-        if (amount <= 0f)
+        if (!ExperienceEnabled || amount <= 0f)
             return;
 
         CurrentExperience += amount;
@@ -110,6 +114,9 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     public void TakeDamage(float amount)
     {
+        if (Invulnerable)
+            return;
+
         float damage = Mathf.Max(amount - Defense, 0f);
 
         if (damage <= 0f || CurrentHealth <= 0f)

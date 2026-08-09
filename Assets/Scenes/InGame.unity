@@ -166,8 +166,8 @@ MonoBehaviour:
   countPerRound: 6
   healthScalePerRound: 0.12
   damageScalePerRound: 0.05
-  speedScalePerRound: 0.02
-  maxSpeedMultiplier: 0
+  speedScalePerRound: 0
+  maxSpeedMultiplier: 1
   spawnStagger: 0.15
   roundInterval: 2
   roundTimeLimit: 90
@@ -842,7 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: spine-unity::Spine.Unity.SkeletonRenderer
-  skeletonDataAsset: {fileID: 11400000, guid: 745d070c491b7224f872651d6bda09f5, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 49456281386c31744ae8f8b4220bc8b9, type: 2}
   initialSkinName: 
   initialFlipX: 1
   initialFlipY: 0
@@ -1181,7 +1181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b95ef89406badb41a3d7d1b957d614c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationController
-  skeletonAnimation: {fileID: 1246516781}
+  aliveSkeletonAnimation: {fileID: 1246516781}
+  deathSkeletonAnimation: {fileID: 0}
   stateController: {fileID: 1335333319}
   playerMovement: {fileID: 1335333315}
   deathAnimationName: "\uC8FD\uC74C"
@@ -1638,6 +1639,9 @@ MonoBehaviour:
   popupsPerRound: 1
   sortingOrderOffset: 1
   scaleRange: {x: 0.9, y: 1.15}
+  backgroundVariants:
+  - {fileID: 580031083}
+  - {fileID: 1153144309}
 --- !u!4 &1687192831
 Transform:
   m_ObjectHideFlags: 0

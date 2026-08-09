@@ -18,16 +18,26 @@ public class PlayerInputHandler : MonoBehaviour, PlayerInput.IPlayerActions
 
     private void OnEnable()
     {
+        // 도메인 리로드 등으로 Awake 없이 호출될 수 있으므로 방어한다.
+        if (_input == null)
+            return;
+
         _input.Enable();
     }
 
     private void OnDisable()
     {
+        if (_input == null)
+            return;
+
         _input.Disable();
     }
 
     private void OnDestroy()
     {
+        if (_input == null)
+            return;
+
         _input.Player.RemoveCallbacks(this);
         _input.Dispose();
     }
