@@ -149,26 +149,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   player: {fileID: 1335333317}
-  enemyPrefabs:
-  - {fileID: 3560255735996239358, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
-  - {fileID: 3560255735996239358, guid: 4da7a03618998f04b94c12fd3a035317, type: 3}
-  - {fileID: 3560255735996239358, guid: 5ce6b5ad4d0bbc04f86451b61ceaebed, type: 3}
-  - {fileID: 3560255735996239358, guid: fc8f8cec90c28ba409fc1b047539ff16, type: 3}
-  rounds:
-  - counts: 06000000000000000000000000000000
-  - counts: 03000000060000000000000000000000
-  - counts: 09000000060000000000000000000000
-  - counts: 06000000090000000300000000000000
-  - counts: 0c000000030000000600000000000000
-  - counts: 000000000c0000000c00000000000000
-  - counts: 0c0000000c0000000300000003000000
+  enemyTypes:
+  - prefab: {fileID: 3560255735996239358, guid: 6dc24436067a27b4f96ae94aa4f966b1, type: 3}
+    unlockRound: 1
+    weight: 4
+  - prefab: {fileID: 3560255735996239358, guid: 4da7a03618998f04b94c12fd3a035317, type: 3}
+    unlockRound: 2
+    weight: 3
+  - prefab: {fileID: 3560255735996239358, guid: 5ce6b5ad4d0bbc04f86451b61ceaebed, type: 3}
+    unlockRound: 4
+    weight: 2
+  - prefab: {fileID: 3560255735996239358, guid: fc8f8cec90c28ba409fc1b047539ff16, type: 3}
+    unlockRound: 7
+    weight: 1
+  baseCount: 4
+  countPerRound: 6
+  healthScalePerRound: 0.12
+  damageScalePerRound: 0.05
+  speedScalePerRound: 0.02
+  maxSpeedMultiplier: 0
   spawnStagger: 0.15
   roundInterval: 2
   roundTimeLimit: 90
   spawnRadius: 12
-  healthScalePerRound: 0.05
-  speedScalePerRound: 0.02
-  damageScalePerRound: 0.05
 --- !u!4 &97627458
 Transform:
   m_ObjectHideFlags: 0
@@ -900,7 +903,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d7ad390c607fd7c4a9120b1d100206cc, type: 2}
+  - {fileID: 2100000, guid: d4d564b36c6aea3499d759e22808c471, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1152,6 +1155,8 @@ MonoBehaviour:
   damageSfxClip: {fileID: 8300000, guid: 8c9834e11c5bd26438ffbb959c66fb8f, type: 3}
   damageSfxVolume: 1
   audioSource: {fileID: 0}
+  animationController: {fileID: 0}
+  stateController: {fileID: 0}
 --- !u!114 &1335333319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1179,6 +1184,9 @@ MonoBehaviour:
   skeletonAnimation: {fileID: 1246516781}
   stateController: {fileID: 1335333319}
   playerMovement: {fileID: 1335333315}
+  deathAnimationName: "\uC8FD\uC74C"
+  damageFlashDuration: 0.3
+  damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!70 &1335333321
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1630,7 +1638,6 @@ MonoBehaviour:
   popupsPerRound: 1
   sortingOrderOffset: 1
   scaleRange: {x: 0.9, y: 1.15}
-  maxTiltAngle: 6
 --- !u!4 &1687192831
 Transform:
   m_ObjectHideFlags: 0
@@ -1688,7 +1695,7 @@ PrefabInstance:
       objectReference: {fileID: 1335333314}
     - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: cardPool.Array.size
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: 'cardPool.Array.data[1]'
@@ -1705,19 +1712,19 @@ PrefabInstance:
     - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: 'cardPool.Array.data[4]'
       value: 
-      objectReference: {fileID: 8136965284475565859, guid: 09ee997cbf0b6c148b12fbd00aa02d43, type: 3}
+      objectReference: {fileID: 8136965284475565859, guid: 030d6db413b43e54c9f625d3cd7d2db1, type: 3}
     - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: 'cardPool.Array.data[5]'
       value: 
-      objectReference: {fileID: 8136965284475565859, guid: 030d6db413b43e54c9f625d3cd7d2db1, type: 3}
+      objectReference: {fileID: 8136965284475565859, guid: 9dfc3e3511007f04d90144add907d170, type: 3}
     - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: 'cardPool.Array.data[6]'
       value: 
-      objectReference: {fileID: 8136965284475565859, guid: 9dfc3e3511007f04d90144add907d170, type: 3}
+      objectReference: {fileID: 8136965284475565859, guid: ab3974d446f8f7247a49ba0ceff5b228, type: 3}
     - target: {fileID: 1658454785129254607, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: 'cardPool.Array.data[7]'
       value: 
-      objectReference: {fileID: 8136965284475565859, guid: ab3974d446f8f7247a49ba0ceff5b228, type: 3}
+      objectReference: {fileID: 8136965284475565859, guid: 09ee997cbf0b6c148b12fbd00aa02d43, type: 3}
     - target: {fileID: 3371245782736742559, guid: 1ec981e4462bb264b8c2370143c038cd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1840,3 +1847,4 @@ SceneRoots:
   - {fileID: 97627458}
   - {fileID: 376527059}
   - {fileID: 1687192831}
+  - {fileID: 1353051034}

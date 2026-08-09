@@ -17,6 +17,10 @@ public class RoundPopupSpawner : MonoBehaviour
     [Header("Variation")]
     [SerializeField] private Vector2 scaleRange = new Vector2(0.9f, 1.15f);
 
+    [Header("Background Variants")]
+    [Tooltip("라운드마다 이 중 하나만 랜덤으로 켠다. (예: pc1_0, pc2_0)")]
+    [SerializeField] private GameObject[] backgroundVariants;
+
     private void Start()
     {
         if (spawner != null)
@@ -31,12 +35,30 @@ public class RoundPopupSpawner : MonoBehaviour
 
     private void HandleRoundStarted(int round)
     {
-        // 1라운드는 깨끗한 화면으로 시작. 이후 라운드마다 쌓여 총 (라운드 - 1)개가 된다.
+        // 배경은 1라운드부터 매 라운드 랜덤으로 교체된다.
+        PickRandomBackground();
+
+        // 팝업은 1라운드엔 없고, 이후 라운드마다 쌓여 총 (라운드 - 1)개가 된다.
         if (round <= 1)
             return;
 
         for (int i = 0; i < popupsPerRound; i++)
             SpawnPopup();
+    }
+
+    // 배경 후보 중 하나만 켜고 나머지는 끈다.
+    private void PickRandomBackground()
+    {
+        if (backgroundVariants == null || backgroundVariants.Length == 0)
+            return;
+
+        int chosen = Random.Range(0, backgroundVariants.Length);
+
+        for (int i = 0; i < backgroundVariants.Length; i++)
+        {
+            if (backgroundVariants[i] != null)
+                backgroundVariants[i].SetActive(i == chosen);
+        }
     }
 
     private void SpawnPopup()

@@ -26,13 +26,13 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Wave Size")]
     [Tooltip("1라운드 적 수")]
-    [SerializeField] private int baseCount = 6;
+    [SerializeField] private int baseCount = 4;
     [Tooltip("라운드당 늘어나는 적 수")]
     [SerializeField] private float countPerRound = 6f;
 
     [Header("Difficulty Scaling (라운드당 복리)")]
     [Tooltip("플레이어 DPS가 스킬 수에 비례해 늘어나므로 체력도 복리로 올린다.")]
-    [SerializeField] private float healthScalePerRound = 0.12f;
+    [SerializeField] private float healthScalePerRound = 0.15f;
     [SerializeField] private float damageScalePerRound = 0.08f;
     [SerializeField] private float speedScalePerRound = 0.02f;
     [Tooltip("이동속도는 너무 오르면 회피가 불가능해지므로 상한을 둔다.")]
@@ -112,8 +112,13 @@ public class EnemySpawner : MonoBehaviour
     public float GetDamageMultiplier(int round) =>
         Mathf.Pow(1f + damageScalePerRound, round - 1);
 
-    public float GetSpeedMultiplier(int round) =>
-        Mathf.Min(Mathf.Pow(1f + speedScalePerRound, round - 1), maxSpeedMultiplier);
+    public float GetSpeedMultiplier(int round)
+    {
+        float value = Mathf.Pow(1f + speedScalePerRound, round - 1);
+
+        // 0 이하면 상한을 두지 않은 것으로 본다. (0이면 적이 멈춰버리는 사고 방지)
+        return maxSpeedMultiplier > 0f ? Mathf.Min(value, maxSpeedMultiplier) : value;
+    }
 
     private void CollectUnlocked(int round)
     {
